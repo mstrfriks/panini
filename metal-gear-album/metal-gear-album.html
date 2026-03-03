@@ -9,20 +9,16 @@
 <style>
 :root{--c:rgb(124,235,184);--c2:rgb(80,200,140);--c3:rgb(40,120,80);--cdim:rgb(30,90,60);--cglow:rgba(124,235,184,.22);--bg:#050d0a;--panel:#081410;--panel2:#0a1c14;--scr:#040e08;--blue:#080e16;--txt:rgb(185,240,215);--dim:rgb(70,140,100);--br:rgba(124,235,184,.17);--br2:rgba(124,235,184,.07);--gold:#c8a84b;--gold2:#e0c060;--paper:#f4edda;--ink:#1a1208;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);font-family:'Rajdhani',sans-serif;min-height:100vh;padding:32px 20px 80px;background-image:
-    radial-gradient(ellipse at 50% 0%,rgba(124,235,184,.07) 0%,transparent 60%),
-    repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(124,235,184,.012) 3px,rgba(124,235,184,.012) 4px),
-    repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(124,235,184,.006) 60px,rgba(124,235,184,.006) 61px);}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(0,0,0,.05) 1px,rgba(0,0,0,.05) 2px);}
-/* Cadre album */
-.album-wrap{max-width:1200px;margin:0 auto;position:relative;}
-/* Reliure gauche */
-.album-wrap::before{
-  content:'';position:absolute;left:-14px;top:12px;bottom:12px;width:14px;
-  background:linear-gradient(90deg,#020806,#0a1e10,#061208);
-  border-radius:3px 0 0 3px;
-  box-shadow:-4px 0 18px rgba(0,0,0,.6),inset -2px 0 6px rgba(124,235,184,.08);
+body{
+  background:#111312;
+  font-family:'Rajdhani',sans-serif;
+  min-height:100vh;
+  padding:68px 40px 80px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23111312'/%3E%3C!-- petites lignes grille 10px --%3E%3Cpath d='M0 10 H100 M0 20 H100 M0 30 H100 M0 40 H100 M0 50 H100 M0 60 H100 M0 70 H100 M0 80 H100 M0 90 H100 M10 0 V100 M20 0 V100 M30 0 V100 M40 0 V100 M50 0 V100 M60 0 V100 M70 0 V100 M80 0 V100 M90 0 V100' stroke='%23ffffff' stroke-width='.18' opacity='.12'/%3E%3C!-- grandes lignes 50px --%3E%3Cpath d='M0 50 H100 M0 100 H100 M50 0 V100 M100 0 V100' stroke='%23ffffff' stroke-width='.5' opacity='.22'/%3E%3C!-- croix aux intersections majeures --%3E%3Cg stroke='%23ffffff' stroke-width='.6' opacity='.35'%3E%3Cline x1='47' y1='50' x2='53' y2='50'/%3E%3Cline x1='50' y1='47' x2='50' y2='53'/%3E%3Cline x1='-3' y1='0' x2='3' y2='0'/%3E%3Cline x1='0' y1='-3' x2='0' y2='3'/%3E%3Cline x1='97' y1='0' x2='103' y2='0'/%3E%3Cline x1='100' y1='-3' x2='100' y2='3'/%3E%3Cline x1='-3' y1='100' x2='3' y2='100'/%3E%3Cline x1='0' y1='97' x2='0' y2='103'/%3E%3Cline x1='97' y1='100' x2='103' y2='100'/%3E%3Cline x1='100' y1='97' x2='100' y2='103'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:100px 100px;
 }
+
+
 /* Spirales reliure */
 .album-wrap::after{
   content:'';position:absolute;left:-7px;top:20px;bottom:20px;width:2px;
@@ -183,9 +179,84 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 @media(max-width:600px){.cov-inner{padding:16px 18px 14px;}.fg{grid-template-columns:1fr;}.imgsec{grid-template-columns:1fr;}.sgrid{grid-template-columns:repeat(2,1fr);gap:8px;}.arc-v{padding:12px;}.topbar{padding:5px 14px;}.topbar-tag{display:none;}.tl-card{width:160px;height:240px;}.tl-branch{flex:0 0 12px;}.tl-outer{padding:16px;}}
 
 
+/* ══ BARRE DE NAVIGATION GLOBALE ══ */
+.global-nav{
+  position:fixed;top:0;left:0;right:0;z-index:10000;
+  height:36px;
+  background:rgba(4,6,4,.96);
+  border-bottom:1px solid rgba(124,235,184,.15);
+  display:flex;align-items:center;
+  padding:0 24px;
+  gap:0;
+  backdrop-filter:blur(8px);
+}
+.gnav-logo{
+  font-family:'Orbitron',monospace;font-size:9px;font-weight:900;
+  color:rgba(124,235,184,.4);letter-spacing:4px;
+  margin-right:24px;
+  white-space:nowrap;
+}
+.gnav-sep{width:1px;height:18px;background:rgba(124,235,184,.1);margin:0 4px;}
+.gnav-link{
+  font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2px;
+  color:rgba(124,235,184,.4);text-decoration:none;
+  padding:0 16px;height:36px;display:flex;align-items:center;
+  border-right:1px solid rgba(124,235,184,.08);
+  transition:all .2s;white-space:nowrap;
+}
+.gnav-link:first-of-type{border-left:1px solid rgba(124,235,184,.08);}
+.gnav-link:hover{color:rgb(124,235,184);background:rgba(124,235,184,.06);}
+.gnav-link.active{color:rgb(124,235,184);background:rgba(124,235,184,.08);border-bottom:2px solid rgb(124,235,184);}
+/* ══ DÉCO ALBUM ══ */
+.album-deco{position:relative;margin-top:12px;}
+/* Coins métal aux 4 angles */
+.album-deco::before,.album-deco::after{
+  content:'';position:absolute;width:22px;height:22px;z-index:20;
+  border-color:var(--c2);border-style:solid;
+}
+.album-deco::before{top:-6px;left:-6px;border-width:3px 0 0 3px;}
+.album-deco::after{bottom:-6px;right:-6px;border-width:0 3px 3px 0;}
+.album-deco-tr,.album-deco-bl{
+  position:absolute;width:22px;height:22px;z-index:20;
+  border-color:var(--c2);border-style:solid;
+}
+.album-deco-tr{top:-6px;right:-6px;border-width:3px 3px 0 0;}
+.album-deco-bl{bottom:-6px;left:-6px;border-width:0 0 3px 3px;}
+/* Étiquette prix haut-droite */
+.album-price-tag{
+  position:absolute;top:-14px;right:30px;z-index:21;
+  background:var(--gold);color:#030e08;
+  font-family:'Orbitron',monospace;font-size:8px;font-weight:700;letter-spacing:1px;
+  padding:3px 10px 3px 8px;
+  clip-path:polygon(8px 0%,100% 0%,100% 100%,0% 100%);
+}
+/* Tampon ÉDITION COLLECTOR */
+.album-stamp{
+  position:absolute;bottom:-18px;left:30px;z-index:21;
+  border:2px solid var(--c2);
+  color:var(--c2);
+  font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:3px;
+  padding:2px 10px;
+  opacity:.7;
+  transform:rotate(-1.5deg);
+  background:rgba(5,13,10,.85);
+  white-space:nowrap;
+}
+/* Numéro de collection bas-droite */
+.album-num{
+  position:absolute;bottom:-14px;right:10px;z-index:21;
+  font-family:'Share Tech Mono',monospace;font-size:7px;
+  color:var(--dim);letter-spacing:2px;
+}
+
 </style>
 </head>
 <body>
+<div class="global-nav">
+  <span class="gnav-logo">🕹 PANINI</span>
+  <a href="metal-gear-album.html" class="gnav-link active">⚙ METAL GEAR</a>
+  <a href="final-fantasy-album.html" class="gnav-link">⚔ FINAL FANTASY</a>
+</div>
 <div class="mo" id="modal">
   <div class="mod">
     <button class="mclose" id="mclose">✕</button>
@@ -227,9 +298,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 </div>
 
 <div class="album-wrap">
-<div style="max-width:1200px;margin:0 auto 8px;display:flex;gap:8px;">
-  <a href="final-fantasy-album.html" style="font-family:'Share Tech Mono',monospace;font-size:8px;color:rgba(124,235,184,.5);letter-spacing:2px;text-decoration:none;border:1px solid rgba(124,235,184,.15);padding:4px 14px;transition:all .2s;background:rgba(124,235,184,.03);" onmouseover="this.style.color='rgb(124,235,184)';this.style.borderColor='rgba(124,235,184,.4)'" onmouseout="this.style.color='rgba(124,235,184,.5)';this.style.borderColor='rgba(124,235,184,.15)'">⚔ FINAL FANTASY</a>
-</div>
+<div class="album-deco">
 <div class="album">
   <div class="topbar">
     <div class="topbar-brand">◆ TACTICAL PANINI ◆</div>
@@ -525,6 +594,12 @@ document.getElementById('bdel').addEventListener('click',()=>{
 build();
 </script>
 </div><!-- /album -->
+  <div class="album-deco-tr"></div>
+  <div class="album-deco-bl"></div>
+  <div class="album-price-tag">★ COLLECTOR</div>
+  <div class="album-stamp">// ÉDITION LIMITÉE · 13 VIGNETTES</div>
+  <div class="album-num">N° 001 / 999</div>
+</div><!-- /album-deco -->
 </div><!-- /album-wrap -->
 </body>
 </html>
