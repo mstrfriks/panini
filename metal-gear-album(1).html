@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metal Gear — Album Panini</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --c:rgb(124,235,184);--c2:rgb(80,200,140);--c3:rgb(40,120,80);
+  --cdim:rgb(30,90,60);--cglow:rgba(124,235,184,.22);
+  --bg:#050d0a;--panel:#081410;--panel2:#0a1c14;--scr:#040e08;
+  --blue:#080e16;--txt:rgb(185,240,215);--dim:rgb(70,140,100);
+  --br:rgba(124,235,184,.17);--br2:rgba(124,235,184,.07);
+  --gold:#c8a84b;--gold2:#e0c060;--paper:#f4edda;--ink:#1a1208;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Rajdhani',sans-serif;min-height:100vh;padding:20px 12px 60px;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(124,235,184,.012) 3px,rgba(124,235,184,.012) 4px);}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(0,0,0,.05) 1px,rgba(0,0,0,.05) 2px);}
+.album{max-width:960px;margin:0 auto;border:1px solid var(--c3);box-shadow:0 0 60px rgba(124,235,184,.06);background:var(--panel);border-radius:2px;}
+.topbar{background:linear-gradient(90deg,var(--c2),rgb(60,185,120),rgb(40,160,100));padding:6px 22px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-brand{font-family:'Orbitron',monospace;font-size:10px;font-weight:900;color:#030e08;letter-spacing:5px;}
+.topbar-r{display:flex;gap:10px;align-items:center;}
+.topbar-tag{font-family:'Share Tech Mono',monospace;font-size:8px;color:rgba(3,14,8,.6);letter-spacing:2px;}
+.abtn{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2px;padding:4px 12px;border:1px solid rgba(3,14,8,.35);background:rgba(3,14,8,.12);color:#030e08;cursor:pointer;transition:all .2s;}
+.abtn:hover,.abtn.on{background:rgba(3,14,8,.3);}
+.cover{position:relative;background:linear-gradient(155deg,#050e08,#030a06,#020804);border-bottom:2px solid var(--c3);overflow:hidden;}
+.cover::after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.65) 100%);}
+.cover::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:1;background:repeating-linear-gradient(180deg,transparent,transparent 3px,rgba(124,235,184,.03) 3px,rgba(124,235,184,.03) 4px);}
+.cov-inner{padding:26px 32px 20px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;position:relative;z-index:2;}
+.cov-title h1{font-family:'Orbitron',monospace;font-size:clamp(24px,4.5vw,52px);font-weight:900;color:var(--c);line-height:.9;letter-spacing:3px;text-shadow:0 0 28px rgba(124,235,184,.5),0 0 60px rgba(124,235,184,.2);}
+.cov-title h1 em{display:block;font-style:normal;font-size:.42em;color:var(--txt);letter-spacing:14px;margin-top:8px;font-weight:400;opacity:.7;}
+.cov-title .tag{font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--cdim);margin-top:12px;letter-spacing:2px;border-left:2px solid var(--c2);padding-left:10px;}
+.excl{font-family:'Orbitron',monospace;font-size:82px;font-weight:900;color:var(--c);line-height:1;animation:excl 2.8s ease-in-out infinite;text-shadow:0 0 20px rgba(124,235,184,.6);}
+@keyframes excl{0%,100%{text-shadow:0 0 18px rgba(124,235,184,.35);}50%{text-shadow:0 0 50px rgba(124,235,184,1),0 0 90px rgba(124,235,184,.35);}}
+.wiki{background:var(--scr);border-bottom:1px solid var(--br);padding:14px 24px;position:relative;}
+.wiki::before{content:'> INTEL // SOURCE : WIKIPEDIA';position:absolute;top:7px;left:24px;font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--cdim);letter-spacing:3px;}
+.wiki-txt{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--txt);line-height:1.75;margin-top:16px;}
+.wiki-txt strong{color:var(--c);}
+.wiki-a{display:inline-block;margin-top:8px;font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--c2);letter-spacing:2px;text-decoration:none;border-bottom:1px solid rgba(124,235,184,.3);transition:all .2s;}
+.wiki-a:hover{color:var(--c);border-color:var(--c);}
+.stats{display:flex;border-bottom:1px solid var(--br);background:var(--blue);}
+.sc{flex:1;padding:10px 8px;border-right:1px solid var(--br2);display:flex;flex-direction:column;align-items:center;gap:1px;}
+.sc:last-child{border-right:none;}
+.sv{font-family:'Orbitron',monospace;font-size:20px;color:var(--c);font-weight:700;text-shadow:0 0 10px var(--cglow);}
+.sl{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--dim);letter-spacing:2px;}
+.prog{padding:11px 24px;border-bottom:1px solid var(--br);background:var(--panel);}
+.prog-h{display:flex;justify-content:space-between;margin-bottom:5px;}
+.prog-h span{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--dim);letter-spacing:2px;}
+.prog-h strong{font-family:'Orbitron',monospace;font-size:13px;color:var(--c);}
+.prog-t{height:5px;background:rgba(124,235,184,.07);border:1px solid var(--br2);border-radius:1px;overflow:hidden;}
+.prog-f{height:100%;transition:width 1s cubic-bezier(.4,0,.2,1);background:repeating-linear-gradient(90deg,var(--c3) 0px,var(--c3) 4px,var(--c2) 4px,var(--c2) 8px);}
+.toolbar{padding:9px 24px;border-bottom:2px solid var(--c3);background:var(--blue);display:flex;gap:7px;flex-wrap:wrap;align-items:center;}
+.tbl{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--dim);letter-spacing:2px;margin-right:2px;}
+.tbtn{font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:1.5px;padding:5px 12px;background:transparent;border:1px solid var(--br);color:var(--dim);cursor:pointer;transition:all .18s;}
+.tbtn:hover{border-color:var(--c2);color:var(--c);}
+.tbtn.on{background:rgba(124,235,184,.1);border-color:var(--c2);color:var(--c);box-shadow:0 0 8px rgba(124,235,184,.12);}
+.tsep{width:1px;background:var(--br);margin:0 4px;align-self:stretch;}
+
+/* ═══════════════════════════════════════════
+   FRISE — scroll horizontal, une seule rangée
+   Cartes portrait 2/3, positionnement absolu
+═══════════════════════════════════════════ */
+.tl-outer{
+  background:var(--panel);overflow-x:auto;overflow-y:visible;
+  padding:8px 16px 18px;
+  scrollbar-width:thin;scrollbar-color:var(--c3) transparent;
+}
+.tl-outer::-webkit-scrollbar{height:4px;}
+.tl-outer::-webkit-scrollbar-thumb{background:var(--c3);border-radius:2px;}
+
+/* Conteneur de largeur fixe — tout en position absolue */
+.tl-cont{position:relative;/* width & height set by JS */}
+
+/* Axe horizontal au centre */
+.tl-axis{
+  position:absolute;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--c3) 1%,var(--c2) 20%,var(--c) 50%,var(--c2) 80%,var(--c3) 99%,transparent);
+  box-shadow:0 0 8px var(--cglow);pointer-events:none;z-index:1;
+  /* top set by JS */
+}
+
+/* Colonne : contient carte+tige+année+nœud en colonne */
+.tl-col{
+  position:absolute;
+  display:flex;flex-direction:column;align-items:center;
+  /* top, left, width, height set by JS */
+}
+
+/* Nœud */
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--panel);border:2px solid var(--c2);box-shadow:0 0 6px var(--cglow);flex-shrink:0;z-index:3;transition:all .2s;}
+.tl-col:hover .tl-dot{background:var(--c2);box-shadow:0 0 12px rgba(124,235,184,.7);}
+.tl-col.owned .tl-dot{background:var(--c2);}
+.tl-col.missing .tl-dot{opacity:.35;}
+.tl-dot.ds{border-color:#6090ff;}.tl-dot.db{border-color:#ff7070;}.tl-dot.dp{border-color:var(--c);}
+
+/* Année */
+.tl-yr{font-family:'Orbitron',monospace;font-size:7px;font-weight:700;color:var(--c);letter-spacing:1px;text-shadow:0 0 4px var(--cglow);padding:1px 0;line-height:1;text-align:center;width:100%;flex-shrink:0;}
+
+/* Tige */
+.tl-stem{width:1px;background:var(--c3);flex-shrink:0;}
+
+/* Carte portrait — même format que vue arc (ratio 2/3) */
+.tl-card{
+  cursor:pointer;border-radius:3px;overflow:hidden;user-select:none;
+  position:relative;background:var(--paper);border:1px solid rgba(180,150,60,.3);
+  box-shadow:1px 2px 5px rgba(0,0,0,.5);flex-shrink:0;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s,filter .22s;
+  /* width & height set by JS */
+}
+.tl-card::before{content:'';position:absolute;inset:0;z-index:5;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.1) 0%,transparent 55%);}
+.tl-card:hover{transform:translateY(-4px) scale(1.07) rotate(-.3deg);box-shadow:0 12px 24px rgba(0,0,0,.7),0 0 0 2px var(--c2),0 0 16px rgba(124,235,184,.15);z-index:20;}
+.tl-col.missing .tl-card{filter:brightness(.18) grayscale(1);}
+.tl-col.missing .tl-card:hover{filter:brightness(.3) grayscale(.7);}
+
+/* Rarity stripe */
+.tl-rar{position:absolute;top:0;left:0;right:0;height:3px;z-index:6;}
+.rarity-common .tl-rar{background:#3a7a2a;}
+.rarity-rare .tl-rar{background:linear-gradient(90deg,#1040b0,#4a7aff);}
+.rarity-epic .tl-rar{background:linear-gradient(90deg,#5a1898,#b070ec);}
+.rarity-legendary .tl-rar{background:linear-gradient(90deg,var(--gold),#fff8b0,var(--gold));background-size:200%;animation:sh 2s infinite;}
+@keyframes sh{0%{background-position:0%}100%{background-position:200%}}
+.rarity-legendary.owned .tl-card{animation:lg 3s ease-in-out infinite;}
+@keyframes lg{0%,100%{box-shadow:1px 2px 5px rgba(0,0,0,.4),0 0 0 1px rgba(200,168,75,.3);}50%{box-shadow:1px 2px 5px rgba(0,0,0,.4),0 0 0 2px var(--gold),0 0 12px rgba(200,168,75,.3);}}
+
+/* Image cover — structure identique à vue arc */
+.tl-cov{position:absolute;top:3px;left:0;right:0;height:62%;overflow:hidden;background:#a8a070;}
+.tl-img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .5s,transform .3s;}
+.tl-img.ok{opacity:1;}
+.tl-card:hover .tl-img.ok{transform:scale(1.06);}
+.tl-sp{display:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.tl-fb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;pointer-events:none;background:linear-gradient(135deg,#b8a870,#a09060);}
+.tl-fb.hidden{display:none;}
+.tl-fb-emoji{font-size:26px;line-height:1;}
+.tl-fb-y{font-family:'Orbitron',monospace;font-size:9px;font-weight:700;color:rgba(40,25,5,.45);letter-spacing:1px;}
+.tl-pfs{position:absolute;top:3px;left:3px;z-index:4;display:flex;flex-wrap:wrap;gap:2px;}
+.pb{font-family:'Share Tech Mono',monospace;font-size:5px;padding:1px 2px;background:rgba(0,0,0,.7);color:rgb(160,220,180);border:1px solid rgba(124,235,184,.2);border-radius:1px;}
+.tl-yrbadge{position:absolute;bottom:0;left:0;right:0;z-index:4;background:linear-gradient(0deg,rgba(0,0,0,.82) 0%,transparent 100%);padding:8px 4px 3px;font-family:'Orbitron',monospace;font-size:7px;font-weight:700;color:var(--gold2);text-align:center;letter-spacing:1px;}
+
+/* Info bas — structure identique à vue arc */
+.tl-inf{position:absolute;bottom:0;left:0;right:0;height:38%;background:linear-gradient(180deg,#f4edda,#ece4c8);border-top:1px solid rgba(140,100,30,.15);padding:3px 5px 4px;display:flex;flex-direction:column;justify-content:center;gap:1px;}
+.tl-inf::before{content:'';position:absolute;top:-1px;left:4px;right:4px;height:1px;background:repeating-linear-gradient(90deg,transparent 0px,transparent 3px,rgba(140,100,30,.18) 3px,rgba(140,100,30,.18) 6px);}
+.tl-n{font-family:'Share Tech Mono',monospace;font-size:5px;color:rgba(80,55,20,.38);letter-spacing:1px;}
+.tl-t{font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;color:var(--ink);line-height:1.1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.tl-arc{font-family:'Share Tech Mono',monospace;font-size:5px;letter-spacing:.5px;margin-top:1px;}
+.as{color:#3060d0;}.ab{color:#c04040;}.ap{color:#208040;}
+
+/* Stamp collé */
+.tl-stamp{position:absolute;bottom:38%;left:0;right:0;z-index:7;background:rgba(20,55,35,.92);text-align:center;font-family:'Share Tech Mono',monospace;font-size:6px;color:var(--c);padding:2px;letter-spacing:2px;transition:opacity .6s ease;}
+.tl-stamp.fade{opacity:0;}
+
+/* VUE ARC */
+.arc-v{padding:18px 24px 26px;}
+.arc-s{margin-bottom:26px;}
+.arc-h{display:flex;align-items:center;margin-bottom:12px;}
+.arc-tab{padding:7px 22px 7px 14px;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;letter-spacing:3px;display:flex;align-items:center;gap:10px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);}
+.arc-tab.ts{background:linear-gradient(135deg,#0c1e42,#060e18);color:#6090ff;border-left:3px solid #3060c0;}
+.arc-tab.tb{background:linear-gradient(135deg,#2e0e0e,#160606);color:#ff7070;border-left:3px solid #c04040;}
+.arc-tab.tp{background:linear-gradient(135deg,#0a1e10,#040e06);color:var(--c);border-left:3px solid var(--c2);}
+.an{font-family:'Share Tech Mono',monospace;font-size:18px;opacity:.2;font-weight:900;}
+.at{font-size:10px;letter-spacing:3px;}.ac2{font-family:'Share Tech Mono',monospace;font-size:8px;opacity:.5;}
+.arc-rule{flex:1;margin-left:10px;border-bottom:1px dashed rgba(124,235,184,.12);}
+.arc-add{margin-left:8px;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--dim);letter-spacing:1px;border:1px solid var(--br);padding:3px 10px;cursor:pointer;transition:all .2s;background:transparent;display:none;}
+.am .arc-add{display:block;}
+.arc-add:hover{border-color:var(--c2);color:var(--c);}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;}
+.stk{position:relative;aspect-ratio:2/3;cursor:pointer;border-radius:3px;overflow:hidden;user-select:none;background:var(--paper);border:1px solid rgba(180,150,60,.3);box-shadow:1px 2px 5px rgba(0,0,0,.45);transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s,filter .22s;}
+.stk::before{content:'';position:absolute;inset:0;z-index:5;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.1) 0%,transparent 55%);}
+.stk:hover{transform:translateY(-7px) scale(1.05) rotate(-.4deg);box-shadow:0 18px 36px rgba(0,0,0,.7),0 0 0 2px var(--c2),0 0 22px rgba(124,235,184,.12);z-index:20;}
+.stk.owned{border-color:rgba(124,235,184,.35);}
+.stk.missing{filter:brightness(.18) grayscale(1);}
+.stk.missing:hover{filter:brightness(.3) grayscale(.7);}
+.rs{position:absolute;top:0;left:0;right:0;height:3px;z-index:6;}
+.rarity-common .rs{background:#3a7a2a;}
+.rarity-rare .rs{background:linear-gradient(90deg,#1040b0,#4a7aff);}
+.rarity-epic .rs{background:linear-gradient(90deg,#5a1898,#b070ec);}
+.rarity-legendary .rs{background:linear-gradient(90deg,var(--gold),#fff8b0,var(--gold));background-size:200%;animation:sh 2s infinite;}
+.rarity-legendary.owned{animation:lg 3s ease-in-out infinite;}
+.cc{position:absolute;top:3px;left:0;right:0;height:62%;overflow:hidden;background:#a8a070;}
+.ci{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .5s,transform .3s;}
+.ci.ok{opacity:1;}
+.stk:hover .ci.ok{transform:scale(1.06);}
+.csp{display:none;}
+.cfb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;pointer-events:none;background:linear-gradient(135deg,#b8a870,#a09060);}
+.cfb.hidden{display:none;}
+.cfb-emoji{font-size:36px;line-height:1;}
+.cfy{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:rgba(40,25,5,.42);letter-spacing:2px;}
+.cpf{position:absolute;top:4px;left:4px;z-index:4;display:flex;flex-wrap:wrap;gap:2px;}
+.cyb{position:absolute;bottom:0;left:0;right:0;z-index:4;background:linear-gradient(0deg,rgba(0,0,0,.82) 0%,transparent 100%);padding:12px 6px 4px;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--gold2);text-align:center;letter-spacing:2px;}
+.ci2{position:absolute;bottom:0;left:0;right:0;height:38%;background:linear-gradient(180deg,#f4edda,#ece4c8);border-top:1px solid rgba(140,100,30,.15);padding:6px 8px 8px;display:flex;flex-direction:column;justify-content:center;gap:2px;}
+.ci2::before{content:'';position:absolute;top:-1px;left:8px;right:8px;height:1px;background:repeating-linear-gradient(90deg,transparent 0px,transparent 3px,rgba(140,100,30,.18) 3px,rgba(140,100,30,.18) 6px);}
+.cn{font-family:'Share Tech Mono',monospace;font-size:7px;color:rgba(80,55,20,.38);letter-spacing:1px;}
+.ct{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:var(--ink);line-height:1.15;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.ca{font-family:'Share Tech Mono',monospace;font-size:6.5px;letter-spacing:.5px;margin-top:2px;}
+.togbtn{position:absolute;top:6px;right:4px;z-index:8;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.75);border:1px solid var(--c2);color:var(--c);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .18s;}
+.stk:hover .togbtn{opacity:1;}
+.edhint{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;background:rgba(124,235,184,.04);opacity:0;transition:opacity .18s;pointer-events:none;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--c);letter-spacing:2px;text-shadow:0 0 8px var(--c);}
+.am .stk:hover .edhint{opacity:1;}
+.ownstamp{position:absolute;bottom:38%;left:0;right:0;z-index:7;background:rgba(20,55,35,.92);text-align:center;font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--c);padding:2px;letter-spacing:2px;transition:opacity .6s ease;}
+.ownstamp.fade{opacity:0;}
+.leg{padding:9px 24px;border-top:1px solid var(--br2);display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:var(--blue);}
+.li{display:flex;align-items:center;gap:5px;font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--dim);letter-spacing:1px;}
+.ld{width:16px;height:3px;border-radius:1px;}.la{width:8px;height:8px;border-radius:50%;}
+
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;z-index:2000;background:rgba(2,8,4,.93);backdrop-filter:blur(6px);align-items:center;justify-content:center;}
+.mo.open{display:flex;}
+.mod{background:var(--panel2);border:1px solid var(--c3);box-shadow:0 0 40px rgba(124,235,184,.08);width:min(570px,95vw);max-height:90vh;overflow-y:auto;padding:26px;position:relative;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(124,235,184,.012) 3px,rgba(124,235,184,.012) 4px);}
+.mod h3{font-family:'Orbitron',monospace;font-size:12px;color:var(--c);letter-spacing:3px;margin-bottom:18px;border-bottom:1px solid var(--br2);padding-bottom:9px;}
+.mclose{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--cdim);font-size:16px;cursor:pointer;}
+.mclose:hover{color:var(--c);}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.ff{grid-column:1/-1;}
+.fgrp{display:flex;flex-direction:column;gap:5px;}
+.fgrp label{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--dim);letter-spacing:2px;}
+.fgrp input,.fgrp select,.fgrp textarea{background:rgba(124,235,184,.04);border:1px solid var(--br);color:var(--txt);font-family:'Rajdhani',sans-serif;font-size:13px;padding:7px 9px;outline:none;width:100%;transition:border-color .18s;}
+.fgrp input:focus,.fgrp select:focus,.fgrp textarea:focus{border-color:var(--c2);}
+.fgrp textarea{resize:vertical;min-height:50px;}
+.fgrp select option{background:var(--panel);color:var(--txt);}
+.pfcks{display:flex;flex-wrap:wrap;gap:7px;}
+.pfc{display:flex;align-items:center;gap:4px;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--dim);}
+.pfc input{width:12px;height:12px;accent-color:var(--c2);}
+.imgsec{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ipbox{aspect-ratio:3/4;border:1px solid var(--br);overflow:hidden;background:var(--scr);display:flex;align-items:center;justify-content:center;}
+.ipbox img{width:100%;height:100%;object-fit:cover;display:none;}
+.ipbox img.show{display:block;}
+.noimg{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--cdim);text-align:center;}
+.ist{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--dim);margin-top:4px;min-height:14px;}
+.ist.ok{color:var(--c2);}.ist.err{color:#ff6040;}
+.upz{border:1px dashed var(--br);padding:9px 8px;text-align:center;cursor:pointer;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--dim);position:relative;transition:all .2s;}
+.upz:hover{border-color:var(--c2);color:var(--c);}
+.upz input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;}
+
+.mact{display:flex;gap:10px;margin-top:18px;justify-content:flex-end;align-items:center;border-top:1px solid var(--br2);padding-top:13px;}
+.bcnl{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;padding:7px 16px;background:transparent;border:1px solid var(--br);color:var(--dim);cursor:pointer;}
+.bsav{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;padding:7px 20px;background:rgba(124,235,184,.12);border:1px solid var(--c2);color:var(--c);cursor:pointer;transition:all .2s;}
+.bsav:hover{background:rgba(124,235,184,.28);}
+.bdel{font-family:'Share Tech Mono',monospace;font-size:9px;padding:7px 12px;background:transparent;border:1px solid rgba(200,50,30,.35);color:rgba(200,80,60,.7);cursor:pointer;margin-right:auto;}
+.bdel:hover{background:rgba(200,50,30,.1);}
+@media(max-width:600px){.cov-inner{padding:16px 18px 14px;}.fg{grid-template-columns:1fr;}.imgsec{grid-template-columns:1fr;}.sgrid{grid-template-columns:repeat(3,1fr);gap:8px;}.arc-v{padding:12px;}.topbar{padding:5px 14px;}.topbar-tag{display:none;}}
+</style>
+</head>
+<body>
+<div class="mo" id="modal">
+  <div class="mod">
+    <button class="mclose" id="mclose">✕</button>
+    <h3 id="mtitle">// AJOUTER UN JEU</h3>
+    <div class="fg">
+      <div class="fgrp"><label>Numéro</label><input type="text" id="fnum" placeholder="014"></div>
+      <div class="fgrp"><label>Année</label><input type="number" id="fyr" placeholder="1998" min="1980" max="2030"></div>
+      <div class="fgrp ff"><label>Titre</label><input type="text" id="ftit" placeholder="Metal Gear…"></div>
+      <div class="fgrp"><label>Rareté</label><select id="frar"><option value="common">Commun</option><option value="rare">Rare</option><option value="epic">Épique</option><option value="legendary">Légendaire</option></select></div>
+      <div class="fgrp"><label>Arc</label><select id="fsec"><option value="0">Arc Solid Snake</option><option value="1">Arc Big Boss</option><option value="2">Spin-offs</option></select></div>
+      <div class="fgrp ff"><label>Image</label>
+        <div class="imgsec">
+          <div><div class="ipbox"><img id="fiprev" alt="p"><div class="noimg" id="fnoimg">NO IMAGE</div></div><div class="ist" id="ist"></div></div>
+          <div style="display:flex;flex-direction:column;gap:7px;">
+            <div class="fgrp"><label>URL directe</label><input type="text" id="furl" placeholder="https://…"></div>
+            <div class="upz">📁 Upload local<input type="file" id="ffile" accept="image/*"></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="fgrp ff"><label>Plateformes</label>
+        <div class="pfcks" id="pfcks">
+          <label class="pfc"><input type="checkbox" value="MSX2"> MSX2</label><label class="pfc"><input type="checkbox" value="NES"> NES</label>
+          <label class="pfc"><input type="checkbox" value="PS1"> PS1</label><label class="pfc"><input type="checkbox" value="PS2"> PS2</label>
+          <label class="pfc"><input type="checkbox" value="PS3"> PS3</label><label class="pfc"><input type="checkbox" value="PS4"> PS4</label>
+          <label class="pfc"><input type="checkbox" value="PS5"> PS5</label><label class="pfc"><input type="checkbox" value="PSP"> PSP</label>
+          <label class="pfc"><input type="checkbox" value="GCN"> GCN</label><label class="pfc"><input type="checkbox" value="X360"> X360</label>
+          <label class="pfc"><input type="checkbox" value="XOne"> XOne</label><label class="pfc"><input type="checkbox" value="XSX"> XSX</label>
+          <label class="pfc"><input type="checkbox" value="PC"> PC</label><label class="pfc"><input type="checkbox" value="Switch"> Switch</label>
+        </div>
+      </div>
+      <div class="fgrp ff"><label>Description</label><textarea id="fdesc"></textarea></div>
+    </div>
+    <div class="mact">
+      <button class="bdel" id="bdel" style="display:none">🗑 Supprimer</button>
+      <button class="bcnl" id="bcnl">Annuler</button>
+      <button class="bsav" id="bsav">✓ Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="album">
+  <div class="topbar">
+    <div class="topbar-brand">◆ TACTICAL PANINI ◆</div>
+    <div class="topbar-r">
+      <span class="topbar-tag">METAL GEAR · ÉDITION COLLECTOR · 1987–2018</span>
+      <button class="abtn" id="admbtn">⚙ ADMIN</button>
+    </div>
+  </div>
+  <div class="cover">
+    <div class="cov-inner">
+      <div class="cov-title">
+        <h1>METAL GEAR<em>TACTICAL ESPIONAGE ACTION</em></h1>
+        <p class="tag">// COLLECTION COMPLÈTE · HIDEO KOJIMA / KONAMI</p>
+      </div>
+      <div class="excl">!</div>
+    </div>
+  </div>
+  <div id="abody">
+    <div class="wiki">
+      <div class="wiki-txt">
+        <strong>Metal Gear</strong> est une série de jeux vidéo développée et éditée par Konami sous la direction du créateur <strong>Hideo Kojima</strong>, apparue en 1987 avec Metal Gear. La série, qui a lancé le genre infiltration, est reconnue internationalement par la critique et la communauté de joueurs et compte plus de <strong>60 millions de jeux vendus</strong>. C'est une œuvre uchronique du genre techno-thriller. Les jeux suivent le plus souvent les opérations d'un soldat d'élite (<strong>Solid Snake</strong>, <strong>Naked Snake</strong> ou <strong>Raiden</strong>) qui doit s'infiltrer en terrain ennemi et dont la finalité est de détruire Metal Gear, un char bipède avec une capacité de frappe nucléaire. La série affiche un message ouvertement <strong>pacifiste, anti-militariste et anti-nucléaire</strong>.<br><br>
+        <a class="wiki-a" href="https://fr.wikipedia.org/wiki/Metal_Gear" target="_blank" rel="noopener">↗ Lire la suite sur Wikipédia</a>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sv" id="sown">0</div><div class="sl">COLLÉS</div></div>
+      <div class="sc"><div class="sv" id="smis">0</div><div class="sl">MANQUANTS</div></div>
+      <div class="sc"><div class="sv" id="stot">0</div><div class="sl">TOTAL</div></div>
+      <div class="sc"><div class="sv" id="spct">0%</div><div class="sl">COMPLÉTÉ</div></div>
+    </div>
+    <div class="prog">
+      <div class="prog-h"><span>// PROGRESSION DE LA COLLECTION</span><strong id="ppct">0%</strong></div>
+      <div class="prog-t"><div class="prog-f" id="pfill" style="width:0%"></div></div>
+    </div>
+    <div class="toolbar">
+      <span class="tbl">VUE :</span>
+      <button class="tbtn on" data-view="tl">📅 Frise chronologique</button>
+      <button class="tbtn" data-view="arc">🎯 Par arc narratif</button>
+      <div class="tsep"></div>
+      <span class="tbl">FILTRE :</span>
+      <button class="tbtn on" data-f="all">Tous</button>
+      <button class="tbtn" data-f="owned">Collés ✓</button>
+      <button class="tbtn" data-f="missing">Manquants</button>
+      <div class="tsep"></div>
+      <button class="tbtn" id="addbtn" style="display:none">+ Ajouter</button>
+    </div>
+    <div id="mc"></div>
+    <div class="leg">
+      <div class="li"><div class="ld" style="background:#3a7a2a"></div>Commun</div>
+      <div class="li"><div class="ld" style="background:#1040b0"></div>Rare</div>
+      <div class="li"><div class="ld" style="background:#5a1898"></div>Épique</div>
+      <div class="li"><div class="ld" style="background:var(--gold)"></div>Légendaire</div>
+      <div style="margin-left:auto;display:flex;gap:10px;">
+        <div class="li"><div class="la" style="background:#3060c0"></div>Arc Solid Snake</div>
+        <div class="li"><div class="la" style="background:#c04040"></div>Arc Big Boss</div>
+        <div class="li"><div class="la" style="background:var(--c2)"></div>Spin-offs</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const ARC=[
+  {id:0,l:'Arc Solid Snake',          tc:'ts',ac:'as',dc:'ds'},
+  {id:1,l:'Arc Big Boss — Préquelles',tc:'tb',ac:'ab',dc:'db'},
+  {id:2,l:'Spin-offs & Dérivés',      tc:'tp',ac:'ap',dc:'dp'},
+];
+let db=[
+  {id:'001',sec:0,title:'Metal Gear',                           yr:1987,rar:'rare',     own:false,pf:['MSX2','NES','PC'],   cimg:null},
+  {id:'002',sec:0,title:'Metal Gear 2: Solid Snake',            yr:1990,rar:'rare',     own:false,pf:['MSX2','PC'],         cimg:null},
+  {id:'003',sec:0,title:'Metal Gear Solid',                     yr:1998,rar:'legendary',own:false,pf:['PS1','PC','GCN'],    cimg:null},
+  {id:'004',sec:0,title:'Metal Gear Solid 2: Sons of Liberty',  yr:2001,rar:'legendary',own:false,pf:['PS2','X360','PC'],   cimg:null},
+  {id:'005',sec:0,title:'MGS: The Twin Snakes',                 yr:2004,rar:'epic',     own:false,pf:['GCN'],               cimg:null},
+  {id:'007',sec:1,title:'Metal Gear Solid 3: Snake Eater',      yr:2004,rar:'legendary',own:false,pf:['PS2','PS3','Switch'],cimg:null},
+  {id:'008',sec:1,title:'MGS: Portable Ops',                    yr:2006,rar:'common',   own:false,pf:['PSP'],               cimg:null},
+  {id:'006',sec:0,title:'MGS4: Guns of the Patriots',           yr:2008,rar:'legendary',own:false,pf:['PS3'],               cimg:null},
+  {id:'009',sec:1,title:'MGS: Peace Walker',                    yr:2010,rar:'epic',     own:false,pf:['PSP','PS3','PC'],    cimg:null},
+  {id:'012',sec:2,title:'Metal Gear Rising: Revengeance',       yr:2013,rar:'epic',     own:false,pf:['PS3','X360','PC'],   cimg:null},
+  {id:'010',sec:1,title:'MGSV: Ground Zeroes',                  yr:2014,rar:'rare',     own:false,pf:['PS4','XOne','PC'],   cimg:null},
+  {id:'011',sec:1,title:'MGSV: The Phantom Pain',               yr:2015,rar:'legendary',own:false,pf:['PS4','XOne','PC'],   cimg:null},
+  {id:'013',sec:2,title:'Metal Gear Survive',                   yr:2018,rar:'common',   own:false,pf:['PS4','XOne','PC'],   cimg:null},
+];
+let nid=14,adm=false,view='tl',filt='all',eid=null,mimg=null;
+
+
+
+function build(){const c=document.getElementById('mc');c.innerHTML='';view==='tl'?buildTL(c):buildArc(c);doFilter();stats();}
+
+/* ══ FRISE : une rangée horizontale, positionnement absolu ══ */
+function buildTL(con){
+  const sorted=[...db].sort((a,b)=>a.yr-b.yr);
+  const N=sorted.length;
+
+  // Dimensions fixes
+  const CW=80, CH=120;   // carte : 80×120 px (ratio 2/3)
+  const COL=CW+14;       // largeur colonne (carte + marge)
+  const STEM=14, YR=14, DOT=10;
+  // Demi-hauteur : carte + tige + année + demi-nœud
+  const HALF=CH+STEM+YR+DOT/2;
+  const H=HALF*2+6; // hauteur totale du conteneur
+
+  const ou=document.createElement('div');ou.className='tl-outer';
+  const ct=document.createElement('div');ct.className='tl-cont';
+  ct.style.cssText=`width:${N*COL+20}px;height:${H}px;`;
+
+  const ax=document.createElement('div');ax.className='tl-axis';
+  ax.style.top=HALF+'px';
+  ct.appendChild(ax);
+
+  sorted.forEach((g,i)=>{
+    const a=ARC[g.sec];
+    const isUp=i%2===0; // pair → carte en haut, impair → carte en bas
+
+    const col=document.createElement('div');
+    col.className=`tl-col rarity-${g.rar} ${g.own?'owned':'missing'}`;
+    col.dataset.id=g.id;col.dataset.rarity=g.rar;col.dataset.owned=g.own;
+
+    if(isUp){
+      // Carte en haut : col part de top=0, hauteur=HALF, flex-direction=column (bas = axe)
+      col.style.cssText=`left:${i*COL+4}px;top:0;width:${COL}px;height:${HALF}px;justify-content:flex-end;`;
+    } else {
+      // Carte en bas : col part de top=HALF+6, hauteur=HALF, flex-direction=column-reverse (haut = axe)
+      col.style.cssText=`left:${i*COL+4}px;top:${HALF+6}px;width:${COL}px;height:${HALF}px;justify-content:flex-start;`;
+    }
+
+    const pf=(g.pf||[]).slice(0,2).map(p=>`<span class="pb">${p}</span>`).join('');
+    const card=document.createElement('div');card.className='tl-card';
+    card.style.cssText=`width:${CW}px;height:${CH}px;`;
+    card.innerHTML=`<div class="tl-rar"></div>
+      <div class="tl-cov">
+        <div class="tl-pfs">${pf}</div>
+        <div class="tl-yrbadge">${g.yr}</div>
+        <div class="tl-fb" id="fb${g.id}"><div class="tl-fb-emoji">🎮</div><div class="tl-fb-y">${g.yr}</div></div>
+        <img class="tl-img" id="im${g.id}" alt="${g.title}">
+      </div>
+      <div class="tl-inf">
+        <div class="tl-n">#${g.id}</div>
+        <div class="tl-t">${g.title}</div>
+        <div class="tl-arc ${a.ac}">▸ ${a.l.split(' —')[0]}</div>
+      </div>`;
+
+    const stem=document.createElement('div');stem.className='tl-stem';stem.style.height=STEM+'px';
+    const yr=document.createElement('div');yr.className='tl-yr';yr.textContent=g.yr;
+    const dot=document.createElement('div');dot.className=`tl-dot ${a.dc}`;
+    if(g.own)dot.style.background='var(--c2)';
+
+    // Haut  : carte → tige → année → nœud (nœud collé à l'axe en bas)
+    // Bas   : nœud → année → tige → carte (nœud collé à l'axe en haut, via column-reverse)
+    if(isUp){col.appendChild(card);col.appendChild(stem);col.appendChild(yr);col.appendChild(dot);}
+    else{col.appendChild(dot);col.appendChild(yr);col.appendChild(stem);col.appendChild(card);}
+
+    loadTL(g);
+    card.addEventListener('click',()=>{if(adm){oEd(g.id);return;}togTL(g,col,card,dot);});
+    ct.appendChild(col);
+  });
+
+  ou.appendChild(ct);con.appendChild(ou);
+}
+
+function togTL(g,col,card,dot){
+  g.own=!g.own;
+  col.classList.toggle('owned',g.own);col.classList.toggle('missing',!g.own);col.dataset.owned=g.own;
+  dot.style.background=g.own?'var(--c2)':'var(--panel)';
+  let s=card.querySelector('.tl-stamp');
+  if(g.own){
+    if(!s){s=document.createElement('div');s.className='tl-stamp';s.textContent='✓ COLLÉ';card.appendChild(s);}
+    s.classList.remove('fade');clearTimeout(s._t);s._t=setTimeout(()=>s.classList.add('fade'),3000);
+  } else if(s) s.classList.add('fade');
+  stats();
+}
+
+function loadTL(g){
+  const im=document.getElementById('im'+g.id),fb=document.getElementById('fb'+g.id);
+  if(!im)return;
+  if(g.cimg){
+    im.onload=()=>{im.classList.add('ok');if(fb)fb.classList.add('hidden');};
+    im.onerror=()=>{};
+    im.src=g.cimg;
+  }
+}
+
+/* ══ VUE ARC ══ */
+function buildArc(con){
+  const w=document.createElement('div');w.className='arc-v';if(adm)w.classList.add('am');
+  ARC.forEach((a,i)=>{
+    const gs=db.filter(g=>g.sec===a.id).sort((x,y)=>x.yr-y.yr);if(!gs.length)return;
+    const s=document.createElement('div');s.className='arc-s';
+    const h=document.createElement('div');h.className='arc-h';
+    h.innerHTML=`<div class="arc-tab ${a.tc}"><span class="an">0${i+1}</span><span class="at">${a.l}</span><span class="ac2">${gs.length} jeux</span></div>
+      <div class="arc-rule"></div><button class="arc-add" data-s="${a.id}">+ Ajouter</button>`;
+    h.querySelector('.arc-add').addEventListener('click',()=>oAdd(a.id));
+    s.appendChild(h);
+    const g2=document.createElement('div');g2.className='sgrid';
+    gs.forEach(g=>g2.appendChild(mkCard(g)));s.appendChild(g2);w.appendChild(s);
+  });
+  con.appendChild(w);
+}
+
+function mkCard(g){
+  const el=document.createElement('div');
+  el.className=`stk rarity-${g.rar} ${g.own?'owned':'missing'}`;
+  el.dataset.id=g.id;el.dataset.rarity=g.rar;el.dataset.owned=g.own;
+  const a=ARC[g.sec],pf=(g.pf||[]).slice(0,3).map(p=>`<span class="pb">${p}</span>`).join('');
+  el.innerHTML=`<div class="rs"></div>
+    <div class="cc"><div class="cpf">${pf}</div><div class="cyb">${g.yr}</div>
+      <div class="cfb" id="cfb${g.id}"><div class="cfb-emoji">🎮</div><div class="cfy">${g.yr}</div></div>
+      <img class="ci" id="ci${g.id}" alt="${g.title}"></div>
+    <div class="ci2"><div class="cn">#${g.id}</div><div class="ct">${g.title}</div>
+      <div class="ca ${a.ac}">▸ ${a.l.split(' —')[0]}</div></div>
+    <button class="togbtn">✓</button><div class="edhint">✎ MODIFIER</div>`;
+  loadArc(g);
+  el.addEventListener('click',e=>{if(e.target.classList.contains('togbtn'))return;if(adm){oEd(g.id);return;}togArc(g,el);});
+  el.querySelector('.togbtn').addEventListener('click',e=>{e.stopPropagation();togArc(g,el);});
+  return el;
+}
+
+function togArc(g,el){
+  g.own=!g.own;el.classList.toggle('owned',g.own);el.classList.toggle('missing',!g.own);el.dataset.owned=g.own;
+  let s=el.querySelector('.ownstamp');
+  if(g.own){
+    if(!s){s=document.createElement('div');s.className='ownstamp';s.textContent='✓ DANS LA COLLECTION';el.appendChild(s);}
+    s.classList.remove('fade');clearTimeout(s._t);s._t=setTimeout(()=>s.classList.add('fade'),3000);
+  } else if(s) s.classList.add('fade');
+  stats();
+}
+
+function loadArc(g){
+  const im=document.getElementById('ci'+g.id),fb=document.getElementById('cfb'+g.id);
+  if(!im)return;
+  if(g.cimg){
+    im.onload=()=>{im.classList.add('ok');if(fb)fb.classList.add('hidden');};
+    im.onerror=()=>{};
+    im.src=g.cimg;
+  }
+}
+
+function stats(){
+  const t=db.length,o=db.filter(g=>g.own).length,p=t?Math.round(o/t*100):0;
+  document.getElementById('sown').textContent=o;document.getElementById('smis').textContent=t-o;
+  document.getElementById('stot').textContent=t;document.getElementById('spct').textContent=p+'%';
+  document.getElementById('ppct').textContent=p+'%';document.getElementById('pfill').style.width=p+'%';
+}
+
+function doFilter(){
+  // Pour la frise : visibility (garde la place), pour l'arc : display
+  document.querySelectorAll('.tl-col').forEach(el=>{
+    const r=el.dataset.rarity,o=el.dataset.owned==='true';
+    let show=true;
+    if(filt==='owned')show=o;else if(filt==='missing')show=!o;
+    else if(['common','rare','epic','legendary'].includes(filt))show=r===filt;
+    el.style.visibility=show?'':'hidden';
+  });
+  document.querySelectorAll('.stk').forEach(el=>{
+    const r=el.dataset.rarity,o=el.dataset.owned==='true';
+    let show=true;
+    if(filt==='owned')show=o;else if(filt==='missing')show=!o;
+    else if(['common','rare','epic','legendary'].includes(filt))show=r===filt;
+    el.style.display=show?'':'none';
+  });
+}
+
+document.querySelectorAll('[data-view]').forEach(b=>{b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-view]').forEach(x=>x.classList.remove('on'));b.classList.add('on');view=b.dataset.view;build();
+});});
+document.querySelectorAll('[data-f]').forEach(b=>{b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-f]').forEach(x=>x.classList.remove('on'));b.classList.add('on');filt=b.dataset.f;doFilter();
+});});
+
+document.getElementById('admbtn').addEventListener('click',()=>{
+  adm=!adm;document.getElementById('admbtn').classList.toggle('on',adm);
+  document.getElementById('abody').classList.toggle('am',adm);
+  document.getElementById('addbtn').style.display=adm?'block':'none';build();
+});
+document.getElementById('addbtn').addEventListener('click',()=>oAdd(0));
+
+const M=document.getElementById('modal');
+const IP=document.getElementById('fiprev'),NI=document.getElementById('fnoimg'),IS=document.getElementById('ist');
+function oMod(){M.classList.add('open');}
+function cMod(){M.classList.remove('open');eid=null;mimg=null;}
+document.getElementById('mclose').addEventListener('click',cMod);
+document.getElementById('bcnl').addEventListener('click',cMod);
+M.addEventListener('click',e=>{if(e.target===M)cMod();});
+function sprev(src){IP.src=src;IP.classList.add('show');NI.style.display='none';}
+function cprev(){IP.src='';IP.classList.remove('show');NI.style.display='';IS.textContent='';IS.className='ist';mimg=null;}
+
+document.getElementById('furl').addEventListener('input',function(){
+  if(this.value.trim()){mimg=this.value.trim();sprev(mimg);IS.textContent='✓ URL définie';IS.className='ist ok';}else cprev();
+});
+document.getElementById('ffile').addEventListener('change',function(){
+  const f=this.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{mimg=e.target.result;document.getElementById('furl').value='';sprev(mimg);IS.textContent='✓ Image uploadée';IS.className='ist ok';};
+  r.readAsDataURL(f);
+});
+
+function reset(){
+  ['fnum','fyr','ftit','fdesc','furl'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('frar').value='common';document.getElementById('fsec').value='0';
+  document.querySelectorAll('#pfcks input').forEach(c=>c.checked=false);
+  document.getElementById('bdel').style.display='none';document.getElementById('mtitle').textContent='// AJOUTER UN JEU';cprev();
+}
+function fill(g){
+  document.getElementById('fnum').value=g.id;document.getElementById('fyr').value=g.yr;
+  document.getElementById('ftit').value=g.title;document.getElementById('frar').value=g.rar;
+  document.getElementById('fsec').value=g.sec;document.getElementById('fdesc').value=g.desc||'';
+  document.getElementById('furl').value=g.cimg||'';
+  document.querySelectorAll('#pfcks input').forEach(c=>{c.checked=(g.pf||[]).includes(c.value);});
+  document.getElementById('bdel').style.display='block';
+  document.getElementById('mtitle').textContent='// MODIFIER : '+g.title;
+  const src=g.cimg||'';
+  if(src){mimg=g.cimg||null;sprev(src);IS.textContent='✓ Image';IS.className='ist ok';}
+  else cprev();
+}
+function oAdd(s){reset();document.getElementById('fsec').value=s;document.getElementById('fnum').value=String(nid).padStart(3,'0');eid=null;oMod();}
+function oEd(id){const g=db.find(x=>x.id===id);if(!g)return;reset();fill(g);eid=id;oMod();}
+
+document.getElementById('bsav').addEventListener('click',()=>{
+  const t=document.getElementById('ftit').value.trim();if(!t){alert('Titre obligatoire.');return;}
+  const pf=Array.from(document.querySelectorAll('#pfcks input:checked')).map(c=>c.value);
+  const id=document.getElementById('fnum').value.trim()||String(nid).padStart(3,'0');
+  const d={id,sec:parseInt(document.getElementById('fsec').value),title:t,
+    yr:parseInt(document.getElementById('fyr').value)||2024,
+    rar:document.getElementById('frar').value,
+    desc:document.getElementById('fdesc').value.trim(),
+    cimg:mimg||null,  // ← image uploadée stockée ici
+    pf,own:false};
+  if(eid){
+    const i=db.findIndex(x=>x.id===eid);d.own=db[i].own;db[i]=d;
+  } else {
+    db.push(d);nid++;
+  }
+  cMod();build(); // rebuild : loadTL/loadArc liront g.cimg en priorité absolue
+});
+
+document.getElementById('bdel').addEventListener('click',()=>{
+  if(!eid||!confirm('Supprimer ?'))return;
+  db=db.filter(x=>x.id!==eid);cMod();build();
+});
+
+build();
+</script>
+</body>
+</html>
