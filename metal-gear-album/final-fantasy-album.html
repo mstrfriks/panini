@@ -348,9 +348,59 @@ body::before{
   .topbar{padding:6px 14px;}
   .topbar-tag{display:none;}
 }
+
+/* ── Animation coller / décoller ── */
+@keyframes peel-off{
+  0%  {transform:perspective(400px) rotateX(0deg) rotateY(0deg) scale(1);box-shadow:2px 3px 10px rgba(0,0,0,.5);}
+  30% {transform:perspective(400px) rotateX(-8deg) rotateY(6deg) scale(1.08) translateY(-10px);box-shadow:0 20px 40px rgba(0,0,0,.7),0 0 0 2px var(--gold);}
+  55% {transform:perspective(400px) rotateX(4deg) rotateY(-3deg) scale(1.04) translateY(-4px);box-shadow:0 10px 20px rgba(0,0,0,.6);}
+  75% {transform:perspective(400px) rotateX(1deg) rotateY(1deg) scale(1.01);box-shadow:0 4px 8px rgba(0,0,0,.5);}
+  90% {transform:perspective(400px) rotateX(-.5deg) rotateY(0deg) scale(1.0);}
+  100%{transform:perspective(400px) rotateX(0deg) rotateY(0deg) scale(1);}
+}
+@keyframes peel-back{
+  0%  {transform:perspective(400px) rotateX(0deg) scale(1);}
+  25% {transform:perspective(400px) rotateX(6deg) rotateY(-5deg) scale(1.05) translateY(-6px);}
+  60% {transform:perspective(400px) rotateX(-2deg) scale(1.01);}
+  100%{transform:perspective(400px) rotateX(0deg) scale(1);}
+}
+@keyframes stamp-in{
+  0%  {opacity:0;transform:scaleY(0) translateY(4px);}
+  60% {opacity:1;transform:scaleY(1.15) translateY(-1px);}
+  80% {transform:scaleY(.95);}
+  100%{transform:scaleY(1) translateY(0);}
+}
+@keyframes glue-drop{
+  0%  {opacity:0;transform:scale(1.4);}
+  50% {opacity:.7;transform:scale(.95);}
+  75% {transform:scale(1.04);}
+  100%{opacity:.35;transform:scale(1);}
+}
+.stk.anim-stick{animation:peel-off .55s cubic-bezier(.25,.46,.45,.94) forwards;}
+.stk.anim-unstick{animation:peel-back .35s ease forwards;}
+.ownstamp.anim-in{animation:stamp-in .35s cubic-bezier(.34,1.56,.64,1) forwards;}
+.glue-spot{
+  position:absolute;width:28px;height:28px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,148,26,.22) 0%,rgba(200,148,26,.06) 60%,transparent 100%);
+  pointer-events:none;z-index:6;transform:scale(0);opacity:0;
+  animation:glue-drop .5s ease forwards;
+}
+
+
+/* ── Hauteurs fixes partagées entre pages ── */
+.cover{min-height:160px;}
+.cov-inner{min-height:130px;}
+.wiki{min-height:110px;}
+.wiki-txt{min-height:72px;}
+.stats{height:64px;}
+.prog{height:40px;}
+.toolbar{min-height:44px;}
 </style>
 </head>
 <body>
+<div style="max-width:960px;margin:0 auto 8px;display:flex;gap:8px;">
+  <a href="metal-gear-album.html" style="font-family:'Cinzel',serif;font-size:8px;color:rgba(200,148,26,.5);letter-spacing:2px;text-decoration:none;border:1px solid rgba(200,148,26,.2);padding:4px 14px;transition:all .2s;background:rgba(200,148,26,.03);" onmouseover="this.style.color='rgb(200,148,26)';this.style.borderColor='rgba(200,148,26,.5)'" onmouseout="this.style.color='rgba(200,148,26,.5)';this.style.borderColor='rgba(200,148,26,.2)'">🕹 METAL GEAR</a>
+</div>
 <div class="album">
   <div class="mo" id="modal">
     <div class="mod">
@@ -406,9 +456,8 @@ body::before{
   </div>
 
   <div class="topbar">
-    <div class="topbar-nav">
-      <a href="metal-gear-album.html" class="topbar-link">🕹 METAL GEAR</a>
-      <div class="topbar-brand">✦ CRYSTAL PANINI ✦</div>
+    
+    <div class="topbar-brand">✦ CRYSTAL PANINI ✦</div>
     </div>
     <div class="topbar-r">
       <span class="topbar-tag">FINAL FANTASY · ÉDITION COMPLÈTE · 1987–2024</span>
@@ -577,11 +626,42 @@ function mkCard(g){
 function togArc(g,el){
   g.own=!g.own;
   el.classList.toggle('owned',g.own);el.classList.toggle('missing',!g.own);el.dataset.owned=g.own;
-  let s=el.querySelector('.ownstamp');
+
   if(g.own){
-    if(!s){s=document.createElement('div');s.className='ownstamp';s.textContent='✦ DANS LA COLLECTION';el.appendChild(s);}
-    s.classList.remove('fade');clearTimeout(s._t);s._t=setTimeout(()=>s.classList.add('fade'),3000);
-  }else if(s)s.classList.add('fade');
+    // Animation coller
+    el.classList.remove('anim-unstick');
+    void el.offsetWidth; // reflow
+    el.classList.add('anim-stick');
+    el.addEventListener('animationend',()=>el.classList.remove('anim-stick'),{once:true});
+
+    // Taches de colle aléatoires
+    [0,1,2].forEach(()=>{
+      const spot=document.createElement('div');spot.className='glue-spot';
+      spot.style.left=Math.round(15+Math.random()*60)+'%';
+      spot.style.top=Math.round(10+Math.random()*55)+'%';
+      spot.style.width=(18+Math.round(Math.random()*16))+'px';
+      spot.style.height=spot.style.width;
+      el.appendChild(spot);
+      setTimeout(()=>spot.remove(),600);
+    });
+
+    // Stamp
+    let s=el.querySelector('.ownstamp');
+    if(!s){s=document.createElement('div');s.className='ownstamp';el.appendChild(s);}
+    s.textContent='✦ COLLÉ';
+    s.classList.remove('fade','anim-in');void s.offsetWidth;
+    s.classList.add('anim-in');
+    clearTimeout(s._t);s._t=setTimeout(()=>s.classList.add('fade'),3000);
+
+  } else {
+    // Animation décoller
+    el.classList.remove('anim-stick');
+    void el.offsetWidth;
+    el.classList.add('anim-unstick');
+    el.addEventListener('animationend',()=>el.classList.remove('anim-unstick'),{once:true});
+    let s=el.querySelector('.ownstamp');
+    if(s)s.classList.add('fade');
+  }
   stats();
 }
 
