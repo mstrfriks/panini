@@ -77,7 +77,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 .rarity-epic .rs{background:linear-gradient(90deg,#5a1898,#b070ec);}
 .rarity-legendary .rs{background:linear-gradient(90deg,var(--gold),#fff8b0,var(--gold));background-size:200%;animation:sh 2s infinite;}
 .rarity-legendary.owned{animation:lg 3s ease-in-out infinite;}
-.cc{position:absolute;top:3px;left:0;right:0;height:62%;overflow:hidden;background:#a8a070;}
+.cc{position:absolute;top:3px;left:0;right:0;height:70%;overflow:hidden;background:#a8a070;}
 .ci{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .5s,transform .3s;}
 .ci.ok{opacity:1;}
 .stk:hover .ci.ok{transform:scale(1.06);}
@@ -86,8 +86,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 .cfb-emoji{font-size:36px;line-height:1;}
 .cfy{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:rgba(40,25,5,.42);letter-spacing:2px;}
 .cpf{position:absolute;top:4px;left:4px;z-index:4;display:flex;flex-wrap:wrap;gap:2px;}
+.cpf-inline{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;}
+.cpf-inline .pb{font-family:'Share Tech Mono',monospace;font-size:5px;padding:1px 3px;background:rgba(0,0,0,.12);color:rgba(40,25,5,.6);border:1px solid rgba(140,100,30,.25);border-radius:1px;letter-spacing:.5px;}
 .cyb{position:absolute;bottom:0;left:0;right:0;z-index:4;background:linear-gradient(0deg,rgba(0,0,0,.82) 0%,transparent 100%);padding:12px 6px 4px;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--gold2);text-align:center;letter-spacing:2px;}
-.ci2{position:absolute;bottom:0;left:0;right:0;height:38%;background:linear-gradient(180deg,#f4edda,#ece4c8);border-top:1px solid rgba(140,100,30,.15);padding:6px 8px 8px;display:flex;flex-direction:column;justify-content:center;gap:2px;}
+.ci2{position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(180deg,#f4edda,#ece4c8);border-top:1px solid rgba(140,100,30,.15);padding:4px 8px 5px;display:flex;flex-direction:column;justify-content:center;gap:2px;}
 .ci2::before{content:'';position:absolute;top:-1px;left:8px;right:8px;height:1px;background:repeating-linear-gradient(90deg,transparent 0px,transparent 3px,rgba(140,100,30,.18) 3px,rgba(140,100,30,.18) 6px);}
 .cn{font-family:'Share Tech Mono',monospace;font-size:7px;color:rgba(80,55,20,.38);letter-spacing:1px;}
 .ct{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;color:var(--ink);line-height:1.15;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
@@ -96,7 +98,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 .stk:hover .togbtn{opacity:1;}
 .edhint{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;background:rgba(124,235,184,.04);opacity:0;transition:opacity .18s;pointer-events:none;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--c);letter-spacing:2px;text-shadow:0 0 8px var(--c);}
 .am .stk:hover .edhint{opacity:1;}
-.ownstamp{position:absolute;bottom:38%;left:0;right:0;z-index:7;background:rgba(20,55,35,.92);text-align:center;font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--c);padding:2px;letter-spacing:2px;transition:opacity .6s ease;}
+.ownstamp{position:absolute;bottom:30%;left:0;right:0;z-index:7;background:rgba(20,55,35,.92);text-align:center;font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--c);padding:2px;letter-spacing:2px;transition:opacity .6s ease;}
 .ownstamp.fade{opacity:0;}
 .leg{padding:9px 24px;border-top:1px solid var(--br2);display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:var(--blue);}
 .li{display:flex;align-items:center;gap:5px;font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--dim);letter-spacing:1px;}
@@ -211,7 +213,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
       <div class="sc"><div class="sv" id="spct">0%</div><div class="sl">COMPLÉTÉ</div></div>
     </div>
     <div class="prog">
-      <div class="prog-h"><span>// PROGRESSION DE LA COLLECTION</span><strong id="ppct">0%</strong></div>
+      <div class="prog-h"><span>// PROGRESSION DE LA COLLECTION</span></div>
       <div class="prog-t"><div class="prog-f" id="pfill" style="width:0%"></div></div>
     </div>
     <div class="toolbar">
@@ -334,11 +336,12 @@ function mkCard(g){
   el.dataset.id=g.id;el.dataset.rarity=g.rar;el.dataset.owned=g.own;
   const a=ARC[g.sec],pf=(g.pf||[]).slice(0,3).map(p=>`<span class="pb">${p}</span>`).join('');
   el.innerHTML=`<div class="rs"></div>
-    <div class="cc"><div class="cpf">${pf}</div><div class="cyb">${g.yr}</div>
+    <div class="cc"><div class="cyb">${g.yr}</div>
       <div class="cfb" id="cfb${g.id}"><div class="cfb-emoji">🎮</div><div class="cfy">${g.yr}</div></div>
       <img class="ci" id="ci${g.id}" alt="${g.title}"></div>
     <div class="ci2"><div class="cn">#${g.id}</div><div class="ct">${g.title}</div>
-      <div class="ca ${a.ac}">▸ ${a.l.split(' —')[0]}</div></div>
+      <div class="ca ${a.ac}">▸ ${a.l.split(' —')[0]}</div>
+      ${pf?`<div class="cpf-inline">${pf}</div>`:''}</div>
     <button class="togbtn">✓</button><div class="edhint">✎ MODIFIER</div>`;
   if(g.cimg)setTimeout(()=>applyImg(g.id,g.cimg),0);
   el.addEventListener('click',e=>{if(e.target.classList.contains('togbtn'))return;if(adm){oEd(g.id);return;}togArc(g,el);});
@@ -361,7 +364,7 @@ function stats(){
   const t=db.length,o=db.filter(g=>g.own).length,p=t?Math.round(o/t*100):0;
   document.getElementById('sown').textContent=o;document.getElementById('smis').textContent=t-o;
   document.getElementById('stot').textContent=t;document.getElementById('spct').textContent=p+'%';
-  document.getElementById('ppct').textContent=p+'%';document.getElementById('pfill').style.width=p+'%';
+  document.getElementById('pfill').style.width=p+'%';
 }
 
 function doFilter(){
