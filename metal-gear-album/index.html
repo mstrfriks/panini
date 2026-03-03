@@ -50,28 +50,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
 .tbtn.on{background:rgba(124,235,184,.1);border-color:var(--c2);color:var(--c);box-shadow:0 0 8px rgba(124,235,184,.12);}
 .tsep{width:1px;background:var(--br);margin:0 4px;align-self:stretch;}
 
-/* ╣══ FRISE HORIZONTALE MULTI-LIGNES ╣══ */
-.tl-outer{background:var(--panel);padding:20px 0 28px;}
-.tl-row-wrap{padding:0 0 36px;}
-.tl-row-wrap:last-child{padding-bottom:4px;}
-.tl-row-label{font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--dim);letter-spacing:3px;padding:0 24px 10px;display:block;}
-.tl-scroll{overflow-x:auto;padding:0 24px 8px;}
-.tl-scroll::-webkit-scrollbar{height:4px;}
-.tl-scroll::-webkit-scrollbar-track{background:rgba(124,235,184,.04);}
-.tl-scroll::-webkit-scrollbar-thumb{background:var(--c3);border-radius:2px;}
-.tl-lane{display:flex;flex-direction:row;position:relative;height:440px;min-width:max-content;}
-.tl-axis{position:absolute;left:0;right:0;top:220px;height:2px;background:linear-gradient(90deg,transparent,var(--c3) 1%,var(--c2) 15%,var(--c) 50%,var(--c2) 85%,var(--c3) 99%,transparent);box-shadow:0 0 6px var(--cglow);pointer-events:none;z-index:1;}
-.tl-col{position:relative;width:150px;flex-shrink:0;height:440px;cursor:pointer;}
-.tl-col.owned .tl-dot{background:var(--c2);}
-.tl-col.missing .tl-card{filter:brightness(.18) grayscale(1);}
-.tl-col.missing .tl-card:hover{filter:brightness(.3) grayscale(.7);}
-.tl-dot{width:11px;height:11px;border-radius:50%;background:var(--panel);border:2px solid var(--c2);box-shadow:0 0 6px var(--cglow);transition:all .2s;position:absolute;left:50%;margin-left:-5px;z-index:3;}
-.tl-col:hover .tl-dot{background:var(--c2);box-shadow:0 0 14px rgba(124,235,184,.7);}
-.tl-dot.ds{border-color:#6090ff;}.tl-dot.db{border-color:#ff7070;}.tl-dot.dp{border-color:var(--c);}
-.tl-yr{font-family:'Orbitron',monospace;font-size:7px;font-weight:700;color:var(--c);letter-spacing:1px;text-shadow:0 0 5px var(--cglow);text-align:center;line-height:1;white-space:nowrap;position:absolute;left:0;right:0;z-index:3;}
-.tl-vline{width:2px;background:var(--c3);position:absolute;left:50%;margin-left:-1px;z-index:1;}
-.tl-stamp{position:absolute;left:4px;right:4px;z-index:7;background:rgba(20,55,35,.92);text-align:center;font-family:'Share Tech Mono',monospace;font-size:7px;color:var(--c);padding:3px;letter-spacing:2px;transition:opacity .6s ease;}
-.tl-stamp.fade{opacity:0;}/* ═══ VUE ARC ═══ */
+/* /* ═══ VUE CHRONOLOGIQUE (memes cartes que l'arc) ═══ */═══ VUE ARC ═══ */
 .arc-v{padding:18px 24px 26px;}
 .arc-s{margin-bottom:26px;}
 .arc-h{display:flex;align-items:center;margin-bottom:12px;}
@@ -314,101 +293,22 @@ function build(){
   },50);
 }
 
-/* ══ FRISE HORIZONTALE ══ */
+/* ══ VUE CHRONO ══ */
 function buildTL(con){
-  var COLS=7,CW=130,CH=180,AXE=220,DH=11,STEM=20,COL_W=150;
-  var ox=Math.round((COL_W-CW)/2); // horizontal centering offset
-  var sorted=[...db].sort((a,b)=>a.yr-b.yr);
-  var ou=document.createElement('div');ou.className='tl-outer';
-  var chunks=[];
-  for(var ci=0;ci<sorted.length;ci+=COLS) chunks.push(sorted.slice(ci,ci+COLS));
-
-  chunks.forEach(function(games,ri){
-    var wrap=document.createElement('div');wrap.className='tl-row-wrap';
-    var lbl=document.createElement('div');lbl.className='tl-row-label';
-    lbl.textContent='// FRISE '+(ri+1)+'/'+chunks.length+' — '+games[0].yr+'–'+games[games.length-1].yr;
-    wrap.appendChild(lbl);
-    var scroll=document.createElement('div');scroll.className='tl-scroll';
-    var lane=document.createElement('div');lane.className='tl-lane';
-    var axis=document.createElement('div');axis.className='tl-axis';
-    lane.appendChild(axis);
-
-    games.forEach(function(g,i){
-      var a=ARC[g.sec];
-      var isTop=i%2===0;
-      var pf=(g.pf||[]).slice(0,3).map(function(p){return '<span class="pb">'+p+'</span>';}).join('');
-
-      var col=document.createElement('div');
-      col.className='tl-col rarity-'+g.rar+' '+(g.own?'owned':'missing');
-      col.dataset.id=g.id;col.dataset.rarity=g.rar;col.dataset.owned=g.own;
-
-      // Card — absolutely positioned
-      var card=document.createElement('div');
-      card.className='tl-card';
-      card.style.cssText='position:absolute;width:'+CW+'px;height:'+CH+'px;left:'+ox+'px;top:'+(isTop?AXE-STEM-CH:AXE+DH+STEM)+'px;';
-      card.innerHTML=
-        '<div class="tl-rar"></div>'
-        +'<div class="tl-cov">'
-          +'<div class="tl-pfs">'+pf+'</div>'
-          +'<div class="tl-yrbadge">'+g.yr+'</div>'
-          +'<div class="tl-fb" id="fb'+g.id+'"><div class="tl-fb-emoji">🎮</div><div class="tl-fb-y">'+g.yr+'</div></div>'
-          +'<img class="tl-img" id="im'+g.id+'" alt="'+g.title+'">'
-        +'</div>'
-        +'<div class="tl-inf">'
-          +'<div class="tl-n">#'+g.id+'</div>'
-          +'<div class="tl-t">'+g.title+'</div>'
-          +'<div class="tl-arc '+a.ac+'">▸ '+a.l.split(' —')[0]+'</div>'
-        +'</div>';
-
-      // Dot — centred on axis line
-      var dot=document.createElement('div');
-      dot.className='tl-dot '+a.dc;
-      dot.style.top=(AXE-Math.round(DH/2))+'px';
-      if(g.own) dot.style.background='var(--c2)';
-
-      // Year label — opposite side from card
-      var yr=document.createElement('div');yr.className='tl-yr';yr.textContent=g.yr;
-      yr.style.top=(isTop?AXE+DH+4:AXE-DH-15)+'px';
-
-      // Vertical stem connecting card edge to dot
-      var vline=document.createElement('div');vline.className='tl-vline';
-      if(isTop){
-        vline.style.top=(AXE-STEM)+'px';   // card bottom = AXE-STEM
-        vline.style.height=STEM+'px';
-      } else {
-        vline.style.top=(AXE+Math.round(DH/2)+1)+'px'; // dot bottom
-        vline.style.height=(STEM-1)+'px';
-      }
-
-      col.appendChild(card);
-      col.appendChild(dot);
-      col.appendChild(yr);
-      col.appendChild(vline);
-
-      (function(gx,_col,_card,_dot){
-        _card.addEventListener('click',function(){if(adm){oEd(gx.id);return;}togTL(gx,_col,_card,_dot);});
-        lane.appendChild(_col);
-        setTimeout(function(){ if(gx.cimg) applyImg(gx.id,gx.cimg); },0);
-      })(g,col,card,dot);
-    });
-
-    scroll.appendChild(lane);
-    wrap.appendChild(scroll);
-    ou.appendChild(wrap);
-  });
-  con.appendChild(ou);
+  const sorted=[...db].sort((a,b)=>a.yr-b.yr);
+  const w=document.createElement('div');w.className='arc-v';if(adm)w.classList.add('am');
+  const hdr=document.createElement('div');hdr.className='arc-h';
+  hdr.innerHTML='<div class="arc-tab tp"><span class="an">⏱</span><span class="at">CHRONOLOGIE</span><span class="ac2">'+sorted.length+' jeux</span></div><div class="arc-rule"></div>';
+  if(adm){const b=document.createElement('button');b.className='arc-add';b.textContent='+ Ajouter';b.addEventListener('click',()=>oAdd(0));hdr.appendChild(b);}
+  w.appendChild(hdr);
+  const grid=document.createElement('div');grid.className='sgrid';
+  sorted.forEach(g=>grid.appendChild(mkCard(g)));
+  w.appendChild(grid);
+  con.appendChild(w);
 }
 
-function togTL(g,col,card,dot){
-  g.own=!g.own;
-  col.classList.toggle('owned',g.own);col.classList.toggle('missing',!g.own);col.dataset.owned=g.own;
-  dot.style.background=g.own?'var(--c2)':'var(--panel)';
-  var s=card.querySelector('.tl-stamp');
-  if(g.own){
-    if(!s){s=document.createElement('div');s.className='tl-stamp';s.textContent='✓ COLLÉ';card.appendChild(s);}
-    s.classList.remove('fade');clearTimeout(s._t);s._t=setTimeout(function(){s.classList.add('fade');},3000);
-  } else if(s) s.classList.add('fade');
-  stats();
+function togTL(g,el){
+  togArc(g,el);
 }
 
 /* ══ VUE ARC ══ */
@@ -465,13 +365,6 @@ function stats(){
 }
 
 function doFilter(){
-  document.querySelectorAll('.tl-col').forEach(el=>{
-    const r=el.dataset.rarity,o=el.dataset.owned==='true';
-    let show=true;
-    if(filt==='owned')show=o;else if(filt==='missing')show=!o;
-    else if(['common','rare','epic','legendary'].includes(filt))show=r===filt;
-    el.style.display=show?'':'none';
-  });
   document.querySelectorAll('.stk').forEach(el=>{
     const r=el.dataset.rarity,o=el.dataset.owned==='true';
     let show=true;
