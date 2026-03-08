@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yakuza / Like a Dragon — Album Panini</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Bebas+Neue&family=Sawarabi+Mincho&family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080608;--bg2:#0e080c;--panel:#120a0e;--dark:#060408;
+  --red:#e8001a;--red2:#ff2035;--red3:#ff6070;
+  --neon:#ff0028;--neonglow:rgba(255,0,40,.4);
+  --gold:#d4982a;--gold2:#f0b830;--gold3:#ffd060;
+  --white:#f0e8e0;--offwhite:#e0d0c0;
+  --dim:#806070;--faint:#a08890;
+  --br:rgba(232,0,26,.3);--br2:rgba(232,0,26,.1);
+  --kanji-red:#c8001a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+
+/* ── Tapis de découpe (partagé) ── */
+body{
+  background:#0a0608;
+  font-family:'IBM Plex Mono',monospace;
+  min-height:100vh;
+  padding:68px 40px 80px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%230a0608'/%3E%3Cpath d='M0 10 H100 M0 20 H100 M0 30 H100 M0 40 H100 M0 50 H100 M0 60 H100 M0 70 H100 M0 80 H100 M0 90 H100 M10 0 V100 M20 0 V100 M30 0 V100 M40 0 V100 M50 0 V100 M60 0 V100 M70 0 V100 M80 0 V100 M90 0 V100' stroke='%23ffffff' stroke-width='.18' opacity='.08'/%3E%3Cpath d='M0 50 H100 M0 100 H100 M50 0 V100 M100 0 V100' stroke='%23ffffff' stroke-width='.4' opacity='.14'/%3E%3Cg stroke='%23ffffff' stroke-width='.5' opacity='.25'%3E%3Cline x1='47' y1='50' x2='53' y2='50'/%3E%3Cline x1='50' y1='47' x2='50' y2='53'/%3E%3Cline x1='0' y1='0' x2='4' y2='0'/%3E%3Cline x1='0' y1='0' x2='0' y2='4'/%3E%3Cline x1='100' y1='100' x2='96' y2='100'/%3E%3Cline x1='100' y1='100' x2='100' y2='96'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:100px 100px;
+  position:relative;
+}
+
+/* Pluie nocturne en arrière-plan */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(
+    170deg,
+    transparent 0px, transparent 18px,
+    rgba(255,0,40,.018) 18px, rgba(255,0,40,.018) 19px
+  );
+  animation:rain 3s linear infinite;
+}
+@keyframes rain{from{background-position:0 0;}to{background-position:-60px 300px;}}
+
+/* Scanlines */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);
+}
+
+/* ══ BARRE DE NAVIGATION GLOBALE ══ */
+.global-nav{
+  position:fixed;top:0;left:0;right:0;z-index:10000;
+  height:36px;
+  background:rgba(6,4,8,.97);
+  border-bottom:1px solid rgba(232,0,26,.3);
+  display:flex;align-items:center;
+  padding:0 24px;gap:0;
+  backdrop-filter:blur(10px);
+}
+.global-nav::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--neon),transparent);
+  box-shadow:0 0 8px var(--neonglow);
+}
+.gnav-logo{
+  font-family:'Bebas Neue',sans-serif;font-size:16px;
+  color:var(--red);letter-spacing:4px;
+  margin-right:24px;white-space:nowrap;
+  text-shadow:0 0 10px var(--neonglow);
+}
+.gnav-link{
+  font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:2px;
+  color:rgba(232,0,26,.4);text-decoration:none;
+  padding:0 16px;height:36px;display:flex;align-items:center;
+  border-right:1px solid rgba(232,0,26,.1);
+  transition:all .2s;white-space:nowrap;
+}
+.gnav-link:first-of-type{border-left:1px solid rgba(232,0,26,.1);}
+.gnav-link:hover{color:var(--red2);background:rgba(232,0,26,.06);text-shadow:0 0 8px var(--neonglow);}
+.gnav-link.active{color:var(--red2);background:rgba(232,0,26,.1);border-bottom:2px solid var(--neon);text-shadow:0 0 8px var(--neonglow);}
+
+/* ── Cadre album reliure noire/rouge ── */
+.album-wrap{max-width:1200px;margin:0 auto;position:relative;z-index:1;}
+.album-wrap::before{
+  content:'';position:absolute;left:-14px;top:12px;bottom:12px;width:14px;
+  background:linear-gradient(90deg,#080004,#180008,#100006);
+  border-radius:3px 0 0 3px;
+  box-shadow:-4px 0 18px rgba(0,0,0,.8),inset -2px 0 6px rgba(232,0,26,.12);
+}
+.album-wrap::after{
+  content:'';position:absolute;left:-7px;top:20px;bottom:20px;width:2px;
+  background:repeating-linear-gradient(180deg,transparent 0px,transparent 8px,rgba(232,0,26,.5) 8px,rgba(232,0,26,.5) 14px,transparent 14px,transparent 22px);
+  z-index:2;
+}
+.album{
+  max-width:1200px;margin:0 auto;
+  border:1px solid rgba(232,0,26,.35);
+  border-left:4px solid var(--red);
+  box-shadow:
+    6px 6px 0 rgba(0,0,0,.6),
+    12px 12px 0 rgba(0,0,0,.3),
+    0 0 0 1px rgba(0,0,0,.8),
+    0 0 60px rgba(232,0,26,.06);
+  background:var(--panel);
+  border-radius:0 2px 2px 0;
+  position:relative;
+  overflow:hidden;
+}
+/* Reflet néon sur le bord */
+.album::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:1px;
+  background:linear-gradient(180deg,transparent,var(--red),transparent);
+  box-shadow:0 0 12px var(--neonglow);z-index:10;pointer-events:none;
+}
+.album::after{content:none;}
+
+/* ── Topbar ── */
+.topbar{
+  background:linear-gradient(90deg,#0a0408,#160a10,#0e0608);
+  border-bottom:1px solid rgba(232,0,26,.3);
+  padding:8px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;
+}
+.topbar::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--red),var(--gold),var(--red),transparent);
+  box-shadow:0 0 8px rgba(232,0,26,.3);
+}
+.topbar-brand{
+  font-family:'Bebas Neue',sans-serif;font-size:20px;
+  color:var(--red2);letter-spacing:5px;
+  text-shadow:0 0 20px var(--neonglow),0 0 40px rgba(255,0,40,.2);
+}
+/* Kanji décoratif */
+.topbar-brand::before{
+  content:'龍';font-family:'Noto Serif JP',serif;font-size:16px;
+  color:var(--gold);margin-right:10px;opacity:.8;
+  text-shadow:0 0 10px rgba(212,152,42,.5);
+}
+.topbar-r{display:flex;gap:10px;align-items:center;}
+.topbar-tag{font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--dim);letter-spacing:2px;}
+.abtn{
+  font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:2px;padding:4px 12px;
+  border:1px solid rgba(232,0,26,.3);background:transparent;color:var(--dim);
+  cursor:pointer;transition:all .2s;
+}
+.abtn:hover{background:rgba(232,0,26,.1);color:var(--red2);border-color:var(--red);box-shadow:0 0 8px var(--neonglow);}
+.abtn.on{background:rgba(232,0,26,.15);color:var(--red2);border-color:var(--red);}
+
+/* ── Hero cover ── */
+.cover{
+  position:relative;overflow:hidden;
+  background:linear-gradient(160deg,#0e0408,#160810,#0a0408);
+  border-bottom:2px solid rgba(232,0,26,.4);
+  min-height:170px;
+}
+/* Lumières de rue en arrière-plan */
+.cover-bg{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 200px 120px at 15% 80%,rgba(232,0,26,.12) 0%,transparent 70%),
+    radial-gradient(ellipse 150px 80px at 80% 60%,rgba(212,152,42,.08) 0%,transparent 70%),
+    radial-gradient(ellipse 100px 200px at 90% 20%,rgba(232,0,26,.07) 0%,transparent 70%);
+}
+/* Kanji verticaux décoratifs */
+.cover-kanji{
+  position:absolute;right:24px;top:0;bottom:0;
+  display:flex;flex-direction:column;justify-content:center;gap:2px;
+  font-family:'Noto Serif JP',serif;font-size:28px;font-weight:900;
+  color:rgba(232,0,26,.12);letter-spacing:0;line-height:1.1;
+  pointer-events:none;z-index:1;
+  text-shadow:0 0 20px rgba(232,0,26,.1);
+}
+.cover::before{
+  content:'';position:absolute;left:0;right:0;top:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--red),var(--gold),var(--red),transparent);
+  box-shadow:0 0 12px var(--neonglow);
+}
+.cov-inner{padding:28px 36px 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;position:relative;z-index:2;}
+.cov-title h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(28px,5vw,58px);font-weight:400;
+  color:var(--white);line-height:1;letter-spacing:4px;
+  text-shadow:0 0 30px rgba(255,0,40,.5),0 0 60px rgba(255,0,40,.15),3px 3px 0 rgba(0,0,0,.8);
+}
+.cov-title h1 em{
+  display:block;font-style:normal;font-size:.35em;
+  font-family:'IBM Plex Mono',monospace;font-weight:400;
+  color:var(--gold2);letter-spacing:6px;margin-top:10px;
+  text-shadow:0 0 8px rgba(212,152,42,.5);
+}
+.cov-title .tag{
+  font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--dim);
+  margin-top:12px;letter-spacing:2px;
+  border-left:3px solid var(--red);padding-left:10px;
+}
+.dragon-icon{
+  font-size:66px;line-height:1;
+  animation:flicker 4s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px rgba(232,0,26,.8)) drop-shadow(0 0 30px rgba(232,0,26,.3));
+}
+@keyframes flicker{
+  0%,90%,100%{filter:drop-shadow(0 0 10px rgba(232,0,26,.7)) drop-shadow(0 0 25px rgba(232,0,26,.2));}
+  92%{filter:drop-shadow(0 0 2px rgba(232,0,26,.3));}
+  94%{filter:drop-shadow(0 0 14px rgba(232,0,26,.9)) drop-shadow(0 0 35px rgba(232,0,26,.4));}
+  96%{filter:drop-shadow(0 0 4px rgba(232,0,26,.4));}
+}
+
+/* ── Wiki / lore ── */
+.wiki{background:rgba(8,4,6,.7);border-bottom:1px solid var(--br2);padding:16px 26px;position:relative;}
+.wiki::before{
+  content:'// DOSSIER · SOURCE : WIKIPEDIA';
+  position:absolute;top:7px;left:26px;
+  font-family:'IBM Plex Mono',monospace;font-size:7px;color:rgba(232,0,26,.35);letter-spacing:3px;
+}
+.wiki-txt{font-family:'Sawarabi Mincho',serif;font-size:12.5px;color:var(--faint);line-height:1.9;margin-top:18px;}
+.wiki-txt strong{color:var(--gold2);}
+.wiki-a{
+  display:inline-block;margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:8px;
+  color:var(--red2);letter-spacing:2px;text-decoration:none;
+  border-bottom:1px solid rgba(232,0,26,.3);transition:all .2s;
+}
+.wiki-a:hover{color:var(--red3);border-color:var(--red2);text-shadow:0 0 6px var(--neonglow);}
+
+/* ── Stats ── */
+.stats{display:flex;border-bottom:1px solid var(--br2);background:rgba(6,3,5,.8);}
+.sc{flex:1;padding:11px 8px;border-right:1px solid var(--br2);display:flex;flex-direction:column;align-items:center;gap:2px;}
+.sc:last-child{border-right:none;}
+.sv{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--red2);font-weight:400;text-shadow:0 0 12px var(--neonglow);}
+.sl{font-family:'IBM Plex Mono',monospace;font-size:6.5px;color:var(--dim);letter-spacing:2px;}
+
+/* ── Progress ── */
+.prog{padding:10px 24px;border-bottom:1px solid var(--br2);background:var(--dark);}
+.prog-h{margin-bottom:5px;}
+.prog-h span{font-family:'IBM Plex Mono',monospace;font-size:7px;color:rgba(232,0,26,.4);letter-spacing:2px;}
+.prog-t{height:4px;background:rgba(232,0,26,.06);border:1px solid var(--br2);overflow:hidden;}
+.prog-f{height:100%;transition:width 1s cubic-bezier(.4,0,.2,1);background:linear-gradient(90deg,var(--kanji-red),var(--red2),var(--gold));box-shadow:0 0 6px var(--neonglow);}
+
+/* ── Toolbar ── */
+.toolbar{
+  padding:10px 24px;border-bottom:2px solid rgba(232,0,26,.3);
+  background:rgba(10,6,8,.9);
+  display:flex;gap:7px;flex-wrap:wrap;align-items:center;
+}
+.tbl{font-family:'IBM Plex Mono',monospace;font-size:7px;color:rgba(232,0,26,.35);letter-spacing:2px;margin-right:2px;}
+.tbtn{
+  font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:1.5px;padding:5px 12px;
+  background:transparent;border:1px solid var(--br2);color:var(--dim);
+  cursor:pointer;transition:all .18s;
+}
+.tbtn:hover{border-color:var(--red);color:var(--red2);text-shadow:0 0 6px var(--neonglow);}
+.tbtn.on{background:rgba(232,0,26,.1);border-color:var(--red);color:var(--red2);box-shadow:0 0 8px rgba(232,0,26,.15);}
+.tsep{width:1px;background:var(--br2);margin:0 4px;align-self:stretch;}
+
+/* ── Arc sections ── */
+.arc-v{padding:20px 24px 28px;}
+.arc-s{margin-bottom:28px;}
+.arc-h{display:flex;align-items:center;margin-bottom:14px;}
+.arc-tab{
+  padding:7px 24px 7px 14px;
+  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:2px;
+  display:flex;align-items:center;gap:10px;
+  clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%);
+}
+.arc-tab.ts{background:linear-gradient(135deg,#1a0006,#280008);color:var(--red2);border-left:3px solid var(--red);}
+.arc-tab.tb{background:linear-gradient(135deg,#0e0c02,#1a1604);color:var(--gold2);border-left:3px solid var(--gold);}
+.arc-tab.tp{background:linear-gradient(135deg,#04080e,#081020);color:#6090e0;border-left:3px solid #4070c0;}
+.arc-tab.tq{background:linear-gradient(135deg,#060c08,#0a1810);color:#50d080;border-left:3px solid #308050;}
+.an{font-family:'Noto Serif JP',serif;font-size:14px;opacity:.2;font-weight:700;}
+.at{font-size:9px;letter-spacing:2px;}.ac2{font-family:'IBM Plex Mono',monospace;font-size:7px;opacity:.4;}
+.arc-rule{flex:1;margin-left:10px;border-bottom:1px solid var(--br2);}
+.arc-add{
+  margin-left:8px;font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--dim);
+  letter-spacing:1px;border:1px solid var(--br2);padding:3px 10px;
+  cursor:pointer;transition:all .2s;background:transparent;display:none;
+}
+.am .arc-add{display:block;}
+.arc-add:hover{border-color:var(--red);color:var(--red2);}
+
+/* ── Grid ── */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}
+
+/* ── Card ── */
+.stk{
+  position:relative;aspect-ratio:2/3;cursor:pointer;
+  overflow:hidden;user-select:none;
+  background:#1a0c10;
+  border:1px solid rgba(232,0,26,.3);
+  box-shadow:3px 3px 12px rgba(0,0,0,.7),0 0 0 1px rgba(0,0,0,.5);
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s;
+}
+.stk::before{
+  content:'';position:absolute;inset:0;z-index:5;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 50%);
+}
+.stk:hover{
+  transform:translateY(-5px) scale(1.03);
+  box-shadow:0 14px 28px rgba(0,0,0,.8),0 0 0 1px var(--red),0 0 20px rgba(232,0,26,.2);
+  z-index:20;
+}
+
+/* MANQUANT : grisé, jaquette visible */
+.stk.missing{filter:grayscale(1) brightness(.6);}
+.stk.missing:hover{filter:grayscale(.7) brightness(.75);}
+
+/* POSSÉDÉ : couleur + lueur néon */
+.stk.owned{
+  border-color:rgba(232,0,26,.6);
+  box-shadow:3px 3px 12px rgba(0,0,0,.7),0 0 0 1px var(--red),0 0 12px rgba(232,0,26,.15);
+}
+
+/* Rarity bar */
+.rs{position:absolute;top:0;left:0;right:0;height:3px;z-index:6;}
+.rarity-common   .rs{background:#4a5040;}
+.rarity-rare     .rs{background:linear-gradient(90deg,#2040a0,#4060e0);}
+.rarity-epic     .rs{background:linear-gradient(90deg,#500878,#c050d8);}
+.rarity-legendary .rs{background:linear-gradient(90deg,var(--red),var(--gold),var(--red));background-size:200%;animation:neon-shift 2s infinite;}
+@keyframes neon-shift{0%{background-position:0%}100%{background-position:200%}}
+.rarity-legendary.owned{box-shadow:3px 3px 12px rgba(0,0,0,.7),0 0 0 1px var(--red),0 0 20px rgba(232,0,26,.3);}
+
+/* Card image */
+.cc{position:absolute;inset:0;overflow:hidden;background:#2a1018;}
+.ci{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;opacity:0;transition:opacity .5s,transform .3s;}
+.ci.ok{opacity:1;}
+.stk:hover .ci.ok{transform:scale(1.04);}
+.cfb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none;background:linear-gradient(135deg,#2a1018,#1a080e);}
+.cfb.hidden{display:none;}
+.cfb-emoji{font-size:30px;line-height:1;}
+.cfy{font-family:'Bebas Neue',sans-serif;font-size:14px;color:rgba(232,0,26,.25);letter-spacing:3px;}
+.cyb{position:absolute;bottom:30%;left:0;right:0;z-index:4;background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,transparent 100%);padding:12px 6px 4px;font-family:'Bebas Neue',sans-serif;font-size:11px;color:var(--gold2);text-align:center;letter-spacing:3px;}
+
+/* Card info */
+.ci2{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(0deg,rgba(14,6,10,.98) 55%,rgba(14,6,10,0));
+  padding:18px 8px 7px;
+  display:flex;flex-direction:column;justify-content:flex-end;gap:2px;
+}
+.cn{font-family:'IBM Plex Mono',monospace;font-size:6px;color:rgba(232,0,26,.25);letter-spacing:1px;}
+.ct{font-family:'Bebas Neue',sans-serif;font-size:13px;color:var(--white);line-height:1.15;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;letter-spacing:1px;}
+.ca{font-family:'IBM Plex Mono',monospace;font-size:6px;letter-spacing:.5px;margin-top:2px;}
+.as{color:var(--red2);}.ab{color:var(--gold2);}.ap{color:#6090e0;}.aq{color:#50d080;}
+.cpf-inline{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;}
+.cpf-inline .pb,.pb{font-family:'IBM Plex Mono',monospace;font-size:5px;padding:1px 3px;background:rgba(232,0,26,.08);color:rgba(200,120,120,.6);border:1px solid rgba(232,0,26,.2);letter-spacing:.5px;}
+.togbtn{
+  position:absolute;top:6px;right:4px;z-index:8;width:20px;height:20px;
+  background:rgba(232,0,26,.8);border:1px solid rgba(0,0,0,.5);color:var(--white);
+  font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .18s;
+}
+.stk:hover .togbtn{opacity:1;}
+.edhint{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;background:rgba(232,0,26,.04);opacity:0;transition:opacity .18s;pointer-events:none;font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--red2);letter-spacing:2px;}
+.am .stk:hover .edhint{opacity:1;}
+.ownstamp{position:absolute;bottom:0;left:0;right:0;z-index:7;background:rgba(160,0,20,.92);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--white);padding:4px;letter-spacing:2px;transition:opacity .6s ease;border-top:1px solid var(--red);box-shadow:0 0 8px var(--neonglow);}
+.ownstamp.fade{opacity:0;}
+
+/* ── Legend ── */
+.leg{padding:10px 24px;border-top:1px solid var(--br2);display:flex;gap:12px;flex-wrap:wrap;align-items:center;background:rgba(6,3,5,.7);}
+.li{display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:6.5px;color:var(--dim);letter-spacing:1px;}
+.ld{width:16px;height:3px;border-radius:1px;}.la{width:8px;height:8px;border-radius:50%;}
+
+/* ── Modal ── */
+.mo{display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.95);backdrop-filter:blur(6px);align-items:center;justify-content:center;}
+.mo.open{display:flex;}
+.mod{
+  background:var(--panel);border:1px solid rgba(232,0,26,.4);
+  box-shadow:0 0 40px rgba(232,0,26,.1),6px 6px 0 rgba(0,0,0,.5);
+  width:min(570px,95vw);max-height:90vh;overflow-y:auto;padding:26px;position:relative;
+}
+.mod h3{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--red2);letter-spacing:4px;margin-bottom:18px;border-bottom:1px solid var(--br2);padding-bottom:9px;text-shadow:0 0 10px var(--neonglow);}
+.mclose{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--dim);font-size:16px;cursor:pointer;}
+.mclose:hover{color:var(--red2);text-shadow:0 0 6px var(--neonglow);}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.ff{grid-column:1/-1;}
+.fgrp{display:flex;flex-direction:column;gap:5px;}
+.fgrp label{font-family:'IBM Plex Mono',monospace;font-size:7px;color:rgba(232,0,26,.4);letter-spacing:2px;}
+.fgrp input,.fgrp select,.fgrp textarea{background:rgba(232,0,26,.04);border:1px solid var(--br2);color:var(--faint);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:7px 9px;outline:none;width:100%;transition:border-color .18s;}
+.fgrp input:focus,.fgrp select:focus,.fgrp textarea:focus{border-color:var(--red);}
+.fgrp textarea{resize:vertical;min-height:50px;}
+.fgrp select option{background:var(--panel);color:var(--faint);}
+.pfcks{display:flex;flex-wrap:wrap;gap:7px;}
+.pfc{display:flex;align-items:center;gap:4px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--dim);}
+.pfc input{width:12px;height:12px;accent-color:var(--red);}
+.imgsec{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ipbox{aspect-ratio:2/3;border:1px solid var(--br2);overflow:hidden;background:rgba(8,4,6,.8);display:flex;align-items:center;justify-content:center;}
+.ipbox img{width:100%;height:100%;object-fit:cover;display:none;}
+.ipbox img.show{display:block;}
+.noimg{font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--dim);text-align:center;padding:8px;line-height:2;}
+.ist{font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--dim);margin-top:4px;min-height:14px;}
+.ist.ok{color:#40c060;}.ist.err{color:var(--red2);}
+.upz{border:1px dashed var(--br2);padding:12px 8px;text-align:center;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:7px;color:var(--dim);position:relative;transition:all .2s;}
+.upz:hover{border-color:var(--red);color:var(--red2);}
+.upz input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;}
+.mact{display:flex;gap:10px;margin-top:18px;justify-content:flex-end;align-items:center;border-top:1px solid var(--br2);padding-top:13px;}
+.bcnl{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:2px;padding:7px 16px;background:transparent;border:1px solid var(--br2);color:var(--dim);cursor:pointer;}
+.bsav{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:2px;padding:7px 20px;background:rgba(232,0,26,.15);border:1px solid var(--red);color:var(--red2);cursor:pointer;transition:all .2s;box-shadow:0 0 8px rgba(232,0,26,.1);}
+.bsav:hover{background:rgba(232,0,26,.25);box-shadow:0 0 14px var(--neonglow);}
+.bdel{font-family:'IBM Plex Mono',monospace;font-size:8px;padding:7px 12px;background:transparent;border:1px solid rgba(100,10,10,.4);color:rgba(180,60,50,.7);cursor:pointer;margin-right:auto;}
+.bdel:hover{background:rgba(100,10,10,.15);}
+
+/* ── Déco album ── */
+.album-deco{position:relative;margin-top:12px;}
+.album-deco::before,.album-deco::after{
+  content:'';position:absolute;width:20px;height:20px;z-index:20;
+  border-color:var(--red);border-style:solid;
+  box-shadow:0 0 6px var(--neonglow);
+}
+.album-deco::before{top:-6px;left:-6px;border-width:3px 0 0 3px;}
+.album-deco::after{bottom:-6px;right:-6px;border-width:0 3px 3px 0;}
+.album-deco-tr,.album-deco-bl{
+  position:absolute;width:20px;height:20px;z-index:20;
+  border-color:var(--red);border-style:solid;
+  box-shadow:0 0 6px var(--neonglow);
+}
+.album-deco-tr{top:-6px;right:-6px;border-width:3px 3px 0 0;}
+.album-deco-bl{bottom:-6px;left:-6px;border-width:0 0 3px 3px;}
+.album-price-tag{
+  position:absolute;top:-14px;right:30px;z-index:5;
+  background:var(--red);color:var(--white);
+  font-family:'IBM Plex Mono',monospace;font-size:7px;font-weight:700;letter-spacing:2px;
+  padding:3px 10px 3px 8px;
+  clip-path:polygon(8px 0%,100% 0%,100% 100%,0% 100%);
+  pointer-events:none;
+  box-shadow:0 0 10px var(--neonglow);
+}
+.album-stamp{
+  display:inline-block;
+  border:1px solid var(--red);color:var(--red);
+  font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:3px;
+  padding:2px 10px;opacity:.65;transform:rotate(-1.5deg);
+  background:rgba(8,4,6,.9);white-space:nowrap;pointer-events:none;
+  text-shadow:0 0 6px var(--neonglow);
+}
+.album-num{
+  font-family:'IBM Plex Mono',monospace;font-size:7px;
+  color:rgba(232,0,26,.35);letter-spacing:2px;pointer-events:none;margin-left:auto;
+}
+.album-footer{
+  display:flex;align-items:center;gap:16px;
+  padding:8px 16px;margin-top:10px;
+}
+
+@media(max-width:600px){
+  .cov-inner{padding:16px 20px 22px;}
+  .fg{grid-template-columns:1fr;}
+  .imgsec{grid-template-columns:1fr;}
+  .sgrid{grid-template-columns:repeat(2,1fr);gap:10px;}
+  .arc-v{padding:12px;}
+  .topbar{padding:6px 14px;}
+  .topbar-tag{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="global-nav">
+  <span class="gnav-logo">🕹 PANINI</span>
+  <a href="metal-gear-album.html" class="gnav-link">⚙ METAL GEAR</a>
+  <a href="final-fantasy-album.html" class="gnav-link">⚔ FINAL FANTASY</a>
+  <a href="mario-album.html" class="gnav-link">★ MARIO</a>
+  <a href="yakuza-album.html" class="gnav-link active">龍 YAKUZA</a>
+</div>
+
+<div class="album-wrap">
+<div class="album-deco">
+<div class="album">
+
+  <!-- Modal -->
+  <div class="mo" id="modal">
+    <div class="mod">
+      <button class="mclose" id="mclose">✕</button>
+      <h3 id="mtitle">// AJOUTER UN JEU</h3>
+      <div class="fg">
+        <div class="fgrp"><label>Numéro</label><input type="text" id="fnum" placeholder="015"></div>
+        <div class="fgrp"><label>Année</label><input type="number" id="fyr" placeholder="2005" min="2000" max="2030"></div>
+        <div class="fgrp ff"><label>Titre</label><input type="text" id="ftit" placeholder="Yakuza…"></div>
+        <div class="fgrp"><label>Rareté</label><select id="frar"><option value="common">Commun</option><option value="rare">Rare</option><option value="epic">Épique</option><option value="legendary">Légendaire</option></select></div>
+        <div class="fgrp"><label>Saga</label><select id="fsec">
+          <option value="0">Saga Kiryu</option>
+          <option value="1">Saga Ichiban</option>
+          <option value="2">Judgment</option>
+          <option value="3">Spin-offs & dérivés</option>
+        </select></div>
+        <div class="fgrp ff"><label>Image de couverture</label>
+          <div class="imgsec">
+            <div><div class="ipbox"><img id="fiprev" alt="preview"><div class="noimg" id="fnoimg">🐉<br>AUCUNE IMAGE</div></div><div class="ist" id="ist"></div></div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div class="fgrp"><label>URL directe</label><input type="text" id="furl" placeholder="https://…"></div>
+              <div class="upz">// Upload image<input type="file" id="ffile" accept="image/*"></div>
+            </div>
+          </div>
+        </div>
+        <div class="fgrp ff"><label>Plateformes</label>
+          <div class="pfcks" id="pfcks">
+            <label class="pfc"><input type="checkbox" value="PS2"> PS2</label>
+            <label class="pfc"><input type="checkbox" value="PS3"> PS3</label>
+            <label class="pfc"><input type="checkbox" value="PS4"> PS4</label>
+            <label class="pfc"><input type="checkbox" value="PS5"> PS5</label>
+            <label class="pfc"><input type="checkbox" value="Xbox"> Xbox</label>
+            <label class="pfc"><input type="checkbox" value="PC"> PC</label>
+            <label class="pfc"><input type="checkbox" value="Switch"> Switch</label>
+          </div>
+        </div>
+        <div class="fgrp ff"><label>Description</label><textarea id="fdesc"></textarea></div>
+      </div>
+      <div class="mact">
+        <button class="bdel" id="bdel" style="display:none">✕ Supprimer</button>
+        <button class="bcnl" id="bcnl">Annuler</button>
+        <button class="bsav" id="bsav">// Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-brand">YAKUZA PANINI</div>
+    <div class="topbar-r">
+      <span class="topbar-tag">LIKE A DRAGON · ÉDITION COMPLÈTE · 2005–2024</span>
+      <button class="abtn" id="admbtn">⚙ ADMIN</button>
+    </div>
+  </div>
+
+  <!-- Cover -->
+  <div class="cover">
+    <div class="cover-bg"></div>
+    <div class="cover-kanji">龍<br>が<br>如<br>く</div>
+    <div class="cov-inner">
+      <div class="cov-title">
+        <h1>YAKUZA<em>LIKE A DRAGON SERIES</em></h1>
+        <p class="tag">// COLLECTION COMPLÈTE · TOSHIHIRO NAGOSHI / SEGA RGG STUDIO</p>
+      </div>
+      <div class="dragon-icon">🐉</div>
+    </div>
+  </div>
+
+  <div id="abody">
+    <div class="wiki">
+      <div class="wiki-txt">
+        <strong>Yakuza</strong>, connue au Japon sous le nom de <strong>Ryū ga Gotoku</strong> (龍が如く, « Comme un dragon »), est une franchise de jeux d'action-aventure créée par <strong>Toshihiro Nagoshi</strong> et développée par le <strong>RGG Studio</strong> de Sega. Depuis <strong>2005</strong>, la série plonge le joueur dans les ruelles neon de <strong>Kamurocho</strong>, quartier fictif inspiré de Tokyo, à travers les aventures de yakuzas au code d'honneur complexe. La franchise compte plus de <strong>21 millions d'exemplaires vendus</strong> et est devenue un phénomène culte mondial.<br><br>
+        <a class="wiki-a" href="https://fr.wikipedia.org/wiki/Yakuza_(s%C3%A9rie)" target="_blank" rel="noopener">↗ Consulter le dossier sur Wikipédia</a>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sv" id="sown">0</div><div class="sl">COLLÉS</div></div>
+      <div class="sc"><div class="sv" id="smis">0</div><div class="sl">MANQUANTS</div></div>
+      <div class="sc"><div class="sv" id="stot">0</div><div class="sl">TOTAL</div></div>
+      <div class="sc"><div class="sv" id="spct">0%</div><div class="sl">COMPLÉTÉ</div></div>
+    </div>
+    <div class="prog">
+      <div class="prog-h"><span>// PROGRESSION DE LA COLLECTION</span></div>
+      <div class="prog-t"><div class="prog-f" id="pfill" style="width:0%"></div></div>
+    </div>
+    <div class="toolbar">
+      <span class="tbl">VUE :</span>
+      <button class="tbtn on" data-view="tl">// CHRONOLOGIE</button>
+      <button class="tbtn" data-view="arc">// PAR SAGA</button>
+      <div class="tsep"></div>
+      <span class="tbl">FILTRE :</span>
+      <button class="tbtn on" data-f="all">TOUS</button>
+      <button class="tbtn" data-f="owned">COLLÉS ✓</button>
+      <button class="tbtn" data-f="missing">MANQUANTS</button>
+      <div class="tsep"></div>
+      <button class="tbtn" id="addbtn" style="display:none">+ Ajouter</button>
+    </div>
+    <div id="mc"></div>
+    <div class="leg">
+      <div class="li"><div class="ld" style="background:#4a5040"></div>Commun</div>
+      <div class="li"><div class="ld" style="background:#2040a0"></div>Rare</div>
+      <div class="li"><div class="ld" style="background:#500878"></div>Épique</div>
+      <div class="li"><div class="ld" style="background:var(--red)"></div>Légendaire</div>
+      <div style="margin-left:auto;display:flex;gap:10px;">
+        <div class="li"><div class="la" style="background:var(--red)"></div>Saga Kiryu</div>
+        <div class="li"><div class="la" style="background:var(--gold)"></div>Saga Ichiban</div>
+        <div class="li"><div class="la" style="background:#6090e0"></div>Judgment</div>
+        <div class="li"><div class="la" style="background:#50d080"></div>Spin-offs</div>
+      </div>
+    </div>
+  </div>
+</div><!-- /album -->
+  <div class="album-deco-tr"></div>
+  <div class="album-deco-bl"></div>
+  <div class="album-price-tag">龍 COLLECTOR</div>
+</div><!-- /album-deco -->
+<div class="album-footer">
+  <div class="album-stamp">// ÉDITION COMPLÈTE · 14 VIGNETTES</div>
+  <div class="album-num">N° 001 / 999</div>
+</div>
+</div><!-- /album-wrap -->
+
+<script>
+const ARC=[
+  {id:0,l:'Saga Kiryu',tc:'ts',ac:'as'},
+  {id:1,l:'Saga Ichiban',tc:'tb',ac:'ab'},
+  {id:2,l:'Judgment',tc:'tp',ac:'ap'},
+  {id:3,l:'Spin-offs & dérivés',tc:'tq',ac:'aq'},
+];
+let db=[
+  {id:'001',sec:0,title:'Yakuza',yr:2005,rar:'legendary',own:false,pf:['PS2','PS3','PC'],cimg:null},
+  {id:'002',sec:0,title:'Yakuza 2',yr:2006,rar:'epic',own:false,pf:['PS2','PS4','PC'],cimg:null},
+  {id:'003',sec:0,title:'Yakuza 3',yr:2009,rar:'rare',own:false,pf:['PS3','PS4','PC'],cimg:null},
+  {id:'004',sec:0,title:'Yakuza 4',yr:2010,rar:'rare',own:false,pf:['PS3','PS4','PC'],cimg:null},
+  {id:'005',sec:3,title:'Yakuza: Dead Souls',yr:2011,rar:'common',own:false,pf:['PS3'],cimg:null},
+  {id:'006',sec:0,title:'Yakuza 5',yr:2012,rar:'epic',own:false,pf:['PS3','PS4','PC'],cimg:null},
+  {id:'007',sec:0,title:'Yakuza 0',yr:2015,rar:'legendary',own:false,pf:['PS4','Xbox','PC'],cimg:null},
+  {id:'008',sec:0,title:'Yakuza 6: The Song of Life',yr:2016,rar:'epic',own:false,pf:['PS4','Xbox','PC'],cimg:null},
+  {id:'009',sec:0,title:'Yakuza: Like a Dragon',yr:2020,rar:'legendary',own:false,pf:['PS4','PS5','Xbox','PC'],cimg:null},
+  {id:'010',sec:2,title:'Judgment',yr:2018,rar:'epic',own:false,pf:['PS4','PS5','Xbox','PC'],cimg:null},
+  {id:'011',sec:2,title:'Lost Judgment',yr:2021,rar:'rare',own:false,pf:['PS4','PS5','Xbox','PC'],cimg:null},
+  {id:'012',sec:1,title:'Like a Dragon: Ishin!',yr:2023,rar:'rare',own:false,pf:['PS4','PS5','Xbox','PC'],cimg:null},
+  {id:'013',sec:1,title:'Like a Dragon: Infinite Wealth',yr:2024,rar:'legendary',own:false,pf:['PS4','PS5','Xbox','PC'],cimg:null},
+  {id:'014',sec:3,title:'Yakuza Kiwami',yr:2016,rar:'rare',own:false,pf:['PS4','Xbox','PC'],cimg:null},
+];
+let nid=15,adm=false,view='tl',filt='all',eid=null,mimg=null;
+
+function applyImg(id,src){
+  const im=document.getElementById('ci'+id);
+  const fb=document.getElementById('cfb'+id);
+  if(!im)return;
+  if(src){
+    im.onload=()=>{im.classList.add('ok');if(fb)fb.classList.add('hidden');};
+    im.onerror=()=>{if(fb)fb.classList.remove('hidden');};
+    im.src=src;
+  } else {
+    im.onerror=()=>{if(fb)fb.classList.remove('hidden');};
+    im.onload=()=>{im.classList.add('ok');if(fb)fb.classList.add('hidden');};
+    im.src='covers-yakuza/'+id+'.jpg';
+  }
+}
+
+function build(){
+  const c=document.getElementById('mc');c.innerHTML='';
+  view==='tl'?buildTL(c):buildArc(c);
+  doFilter();stats();
+  setTimeout(()=>{db.forEach(g=>{if(!g.cimg)applyImg(g.id,null);});},50);
+}
+
+function buildTL(con){
+  const sorted=[...db].sort((a,b)=>a.yr-b.yr);
+  const w=document.createElement('div');w.className='arc-v';if(adm)w.classList.add('am');
+  const hdr=document.createElement('div');hdr.className='arc-h';
+  hdr.innerHTML='<div class="arc-tab ts"><span class="an">龍</span><span class="at">CHRONOLOGIE</span><span class="ac2">'+sorted.length+' jeux</span></div><div class="arc-rule"></div>';
+  if(adm){const b=document.createElement('button');b.className='arc-add';b.textContent='+ Ajouter';b.addEventListener('click',()=>oAdd(0));hdr.appendChild(b);}
+  w.appendChild(hdr);
+  const grid=document.createElement('div');grid.className='sgrid';
+  sorted.forEach(g=>grid.appendChild(mkCard(g)));
+  w.appendChild(grid);con.appendChild(w);
+}
+
+function buildArc(con){
+  const w=document.createElement('div');w.className='arc-v';if(adm)w.classList.add('am');
+  ARC.forEach((a,i)=>{
+    const gs=db.filter(g=>g.sec===a.id).sort((x,y)=>x.yr-y.yr);if(!gs.length)return;
+    const s=document.createElement('div');s.className='arc-s';
+    const h=document.createElement('div');h.className='arc-h';
+    h.innerHTML=`<div class="arc-tab ${a.tc}"><span class="an">0${i+1}</span><span class="at">${a.l}</span><span class="ac2">${gs.length} jeux</span></div>
+      <div class="arc-rule"></div><button class="arc-add" data-s="${a.id}">+ Ajouter</button>`;
+    h.querySelector('.arc-add').addEventListener('click',()=>oAdd(a.id));
+    s.appendChild(h);
+    const g2=document.createElement('div');g2.className='sgrid';
+    gs.forEach(g=>g2.appendChild(mkCard(g)));s.appendChild(g2);w.appendChild(s);
+  });
+  con.appendChild(w);
+}
+
+function mkCard(g){
+  const el=document.createElement('div');
+  el.className=`stk rarity-${g.rar} ${g.own?'owned':'missing'}`;
+  el.dataset.id=g.id;el.dataset.rarity=g.rar;el.dataset.owned=g.own;
+  const a=ARC[g.sec],pf=(g.pf||[]).slice(0,3).map(p=>`<span class="pb">${p}</span>`).join('');
+  el.innerHTML=`<div class="rs"></div>
+    <div class="cc"><div class="cyb">${g.yr}</div>
+      <div class="cfb" id="cfb${g.id}"><div class="cfb-emoji">🐉</div><div class="cfy">${g.yr}</div></div>
+      <img class="ci" id="ci${g.id}" alt="${g.title}"></div>
+    <div class="ci2"><div class="cn">#${g.id}</div><div class="ct">${g.title}</div>
+      <div class="ca ${a.ac}">// ${a.l}</div>
+      ${pf?`<div class="cpf-inline">${pf}</div>`:''}</div>
+    <button class="togbtn">✓</button><div class="edhint">✎ MODIFIER</div>`;
+  if(g.cimg)setTimeout(()=>applyImg(g.id,g.cimg),0);
+  el.addEventListener('click',e=>{if(e.target.classList.contains('togbtn'))return;if(adm){oEd(g.id);return;}togArc(g,el);});
+  el.querySelector('.togbtn').addEventListener('click',e=>{e.stopPropagation();togArc(g,el);});
+  return el;
+}
+
+function togArc(g,el){
+  g.own=!g.own;
+  el.classList.toggle('owned',g.own);el.classList.toggle('missing',!g.own);el.dataset.owned=g.own;
+  let s=el.querySelector('.ownstamp');
+  if(g.own){
+    if(!s){s=document.createElement('div');s.className='ownstamp';s.textContent='✓ DANS LA COLLECTION';el.appendChild(s);}
+    s.classList.remove('fade');clearTimeout(s._t);s._t=setTimeout(()=>s.classList.add('fade'),3000);
+  }else if(s)s.classList.add('fade');
+  stats();
+}
+
+function stats(){
+  const t=db.length,o=db.filter(g=>g.own).length,p=t?Math.round(o/t*100):0;
+  document.getElementById('sown').textContent=o;document.getElementById('smis').textContent=t-o;
+  document.getElementById('stot').textContent=t;document.getElementById('spct').textContent=p+'%';
+  document.getElementById('pfill').style.width=p+'%';
+}
+
+function doFilter(){
+  document.querySelectorAll('.stk').forEach(el=>{
+    const r=el.dataset.rarity,o=el.dataset.owned==='true';
+    let show=true;
+    if(filt==='owned')show=o;else if(filt==='missing')show=!o;
+    else if(['common','rare','epic','legendary'].includes(filt))show=r===filt;
+    el.style.display=show?'':'none';
+  });
+}
+
+document.querySelectorAll('[data-view]').forEach(b=>{b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-view]').forEach(x=>x.classList.remove('on'));b.classList.add('on');view=b.dataset.view;build();
+});});
+document.querySelectorAll('[data-f]').forEach(b=>{b.addEventListener('click',()=>{
+  document.querySelectorAll('[data-f]').forEach(x=>x.classList.remove('on'));b.classList.add('on');filt=b.dataset.f;doFilter();
+});});
+document.getElementById('admbtn').addEventListener('click',()=>{
+  adm=!adm;document.getElementById('admbtn').classList.toggle('on',adm);
+  document.getElementById('abody').classList.toggle('am',adm);
+  document.getElementById('addbtn').style.display=adm?'block':'none';build();
+});
+document.getElementById('addbtn').addEventListener('click',()=>oAdd(0));
+
+const M=document.getElementById('modal');
+const IP=document.getElementById('fiprev'),NI=document.getElementById('fnoimg'),IS=document.getElementById('ist');
+function oMod(){M.classList.add('open');}
+function cMod(){M.classList.remove('open');eid=null;mimg=null;}
+document.getElementById('mclose').addEventListener('click',cMod);
+document.getElementById('bcnl').addEventListener('click',cMod);
+M.addEventListener('click',e=>{if(e.target===M)cMod();});
+function sprev(src){IP.src=src;IP.classList.add('show');NI.style.display='none';}
+function cprev(){IP.src='';IP.classList.remove('show');NI.style.display='';IS.textContent='';IS.className='ist';mimg=null;}
+document.getElementById('furl').addEventListener('input',function(){
+  if(this.value.trim()){mimg=this.value.trim();sprev(mimg);IS.textContent='✓ URL définie';IS.className='ist ok';}
+  else cprev();
+});
+document.getElementById('ffile').addEventListener('change',function(){
+  const f=this.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{mimg=ev.target.result;document.getElementById('furl').value='';sprev(mimg);IS.textContent='✓ Uploadée ('+Math.round(f.size/1024)+' ko)';IS.className='ist ok';};
+  r.readAsDataURL(f);
+});
+function reset(){
+  ['fnum','fyr','ftit','fdesc','furl'].forEach(i=>document.getElementById(i).value='');
+  document.getElementById('frar').value='common';document.getElementById('fsec').value='0';
+  document.querySelectorAll('#pfcks input').forEach(c=>c.checked=false);
+  document.getElementById('bdel').style.display='none';
+  document.getElementById('mtitle').textContent='// AJOUTER UN JEU';cprev();
+}
+function fill(g){
+  document.getElementById('fnum').value=g.id;document.getElementById('fyr').value=g.yr;
+  document.getElementById('ftit').value=g.title;document.getElementById('frar').value=g.rar;
+  document.getElementById('fsec').value=g.sec;document.getElementById('fdesc').value=g.desc||'';
+  document.getElementById('furl').value=(g.cimg&&g.cimg.startsWith('http'))?g.cimg:'';
+  document.querySelectorAll('#pfcks input').forEach(c=>{c.checked=(g.pf||[]).includes(c.value);});
+  document.getElementById('bdel').style.display='block';
+  document.getElementById('mtitle').textContent='// MODIFIER : '+g.title;
+  if(g.cimg){mimg=g.cimg;sprev(g.cimg);IS.textContent='✓ Image définie';IS.className='ist ok';}
+  else cprev();
+}
+function oAdd(s){reset();document.getElementById('fsec').value=s;document.getElementById('fnum').value=String(nid).padStart(3,'0');eid=null;oMod();}
+function oEd(id){const g=db.find(x=>x.id===id);if(!g)return;reset();fill(g);eid=id;oMod();}
+document.getElementById('bsav').addEventListener('click',()=>{
+  const t=document.getElementById('ftit').value.trim();if(!t){alert('Titre obligatoire.');return;}
+  const pf=Array.from(document.querySelectorAll('#pfcks input:checked')).map(c=>c.value);
+  const id=document.getElementById('fnum').value.trim()||String(nid).padStart(3,'0');
+  const newCimg=mimg||null;
+  if(eid){
+    const i=db.findIndex(x=>x.id===eid);const wasOwn=db[i].own;
+    db[i]={id,sec:parseInt(document.getElementById('fsec').value),title:t,yr:parseInt(document.getElementById('fyr').value)||2024,rar:document.getElementById('frar').value,desc:document.getElementById('fdesc').value.trim(),cimg:newCimg,pf,own:wasOwn};
+    applyImg(id,newCimg);cMod();stats();
+  } else {
+    db.push({id,sec:parseInt(document.getElementById('fsec').value),title:t,yr:parseInt(document.getElementById('fyr').value)||2024,rar:document.getElementById('frar').value,desc:document.getElementById('fdesc').value.trim(),cimg:newCimg,pf,own:false});
+    nid++;cMod();build();
+  }
+});
+document.getElementById('bdel').addEventListener('click',()=>{
+  if(!eid||!confirm('Supprimer ce jeu ?'))return;
+  db=db.filter(x=>x.id!==eid);cMod();build();
+});
+
+build();
+</script>
+</body>
+</html>
