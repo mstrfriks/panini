@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🕹 Panini Collection — Accueil</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕹️</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0b0e;
+  --white:#f0ece8;
+  --dim:#706070;
+  --faint:#908090;
+
+  /* Couleurs franchise */
+  --mg-c:#4aff8a;--mg-dark:#0a1a0e;--mg-mid:#1a3020;
+  --ff-c:#e8b840;--ff-dark:#1a1208;--ff-mid:#2a1e0c;
+  --ma-c:#e4000f;--ma-dark:#1a0204;--ma-mid:#2a0608;
+  --ya-c:#ff2035;--ya-dark:#120008;--ya-mid:#200010;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+
+/* ── Fond tapis de découpe ── */
+body{
+  background:var(--bg);
+  font-family:'Rajdhani',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%230d0b0e'/%3E%3Cpath d='M0 10 H100 M0 20 H100 M0 30 H100 M0 40 H100 M0 50 H100 M0 60 H100 M0 70 H100 M0 80 H100 M0 90 H100 M10 0 V100 M20 0 V100 M30 0 V100 M40 0 V100 M50 0 V100 M60 0 V100 M70 0 V100 M80 0 V100 M90 0 V100' stroke='%23ffffff' stroke-width='.18' opacity='.07'/%3E%3Cpath d='M0 50 H100 M0 100 H100 M50 0 V100 M100 0 V100' stroke='%23ffffff' stroke-width='.4' opacity='.13'/%3E%3Cg stroke='%23ffffff' stroke-width='.5' opacity='.22'%3E%3Cline x1='47' y1='50' x2='53' y2='50'/%3E%3Cline x1='50' y1='47' x2='50' y2='53'/%3E%3Cline x1='0' y1='0' x2='4' y2='0'/%3E%3Cline x1='0' y1='0' x2='0' y2='4'/%3E%3Cline x1='100' y1='100' x2='96' y2='100'/%3E%3Cline x1='100' y1='100' x2='100' y2='96'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:100px 100px;
+}
+
+/* Scanlines subtiles */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);
+}
+
+/* ══ HEADER ══ */
+.site-header{
+  position:relative;
+  padding:70px 60px 50px;
+  text-align:center;
+  overflow:hidden;
+}
+
+/* Lignes diagonales derrière le titre */
+.site-header::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(135deg,transparent 30%,rgba(255,255,255,.012) 30%,rgba(255,255,255,.012) 31%,transparent 31%),
+    linear-gradient(135deg,transparent 50%,rgba(255,255,255,.008) 50%,rgba(255,255,255,.008) 51%,transparent 51%),
+    linear-gradient(135deg,transparent 70%,rgba(255,255,255,.012) 70%,rgba(255,255,255,.012) 71%,transparent 71%);
+}
+
+.site-eyebrow{
+  font-family:'Share Tech Mono',monospace;font-size:9px;
+  letter-spacing:6px;color:rgba(255,255,255,.2);
+  margin-bottom:18px;
+  animation:fadedown .6s ease both;
+}
+.site-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(48px,10vw,110px);
+  line-height:.9;letter-spacing:6px;
+  color:var(--white);
+  text-shadow:0 0 80px rgba(255,255,255,.04);
+  animation:fadedown .7s .1s ease both;
+  position:relative;
+}
+/* Reflet */
+.site-title::after{
+  content:attr(data-text);
+  position:absolute;left:0;right:0;top:100%;
+  background:linear-gradient(0deg,transparent 40%,rgba(255,255,255,.07) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  transform:scaleY(-.6) translateY(2px);pointer-events:none;
+  filter:blur(1px);
+}
+.site-sub{
+  font-family:'Orbitron',monospace;font-size:10px;font-weight:400;
+  color:rgba(255,255,255,.18);letter-spacing:8px;
+  margin-top:16px;
+  animation:fadedown .7s .2s ease both;
+}
+
+/* Ligne séparatrice */
+.header-rule{
+  width:100%;max-width:600px;margin:36px auto 0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+  animation:fadedown .7s .3s ease both;
+}
+
+@keyframes fadedown{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══ COMPTEUR GLOBAL ══ */
+.global-stats{
+  display:flex;justify-content:center;gap:0;
+  max-width:480px;margin:0 auto;
+  border:1px solid rgba(255,255,255,.06);
+  animation:fadein .7s .4s ease both;
+}
+.gs{
+  flex:1;padding:14px 8px;text-align:center;
+  border-right:1px solid rgba(255,255,255,.06);
+}
+.gs:last-child{border-right:none;}
+.gs-v{
+  font-family:'Bebas Neue',sans-serif;font-size:30px;
+  color:var(--white);display:block;line-height:1;
+}
+.gs-l{
+  font-family:'Share Tech Mono',monospace;font-size:7px;
+  color:rgba(255,255,255,.2);letter-spacing:2px;display:block;margin-top:3px;
+}
+
+@keyframes fadein{from{opacity:0;}to{opacity:1;}}
+
+/* ══ GRILLE ALBUMS ══ */
+.albums-section{
+  padding:50px 40px 80px;
+  max-width:1200px;margin:0 auto;
+}
+.section-label{
+  font-family:'Share Tech Mono',monospace;font-size:8px;
+  color:rgba(255,255,255,.18);letter-spacing:4px;
+  margin-bottom:32px;
+  display:flex;align-items:center;gap:16px;
+  animation:fadein .6s .5s ease both;
+}
+.section-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,rgba(255,255,255,.1),transparent);
+}
+
+.albums-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+}
+
+/* ── Carte album ── */
+.album-card{
+  position:relative;
+  border-radius:2px;
+  overflow:hidden;
+  cursor:pointer;
+  text-decoration:none;
+  display:block;
+  aspect-ratio:3/4;
+  /* Animation d'entrée décalée */
+  opacity:0;
+  animation:card-in .7s ease forwards;
+  transform-origin:bottom center;
+}
+.album-card:nth-child(1){animation-delay:.5s;}
+.album-card:nth-child(2){animation-delay:.65s;}
+.album-card:nth-child(3){animation-delay:.8s;}
+.album-card:nth-child(4){animation-delay:.95s;}
+
+@keyframes card-in{
+  from{opacity:0;transform:translateY(30px) rotateX(8deg);}
+  to{opacity:1;transform:translateY(0) rotateX(0);}
+}
+
+/* Fond par franchise */
+.album-card.mg{background:linear-gradient(160deg,var(--mg-dark),var(--mg-mid),#0e1e14);}
+.album-card.ff{background:linear-gradient(160deg,var(--ff-dark),var(--ff-mid),#1e1606);}
+.album-card.ma{background:linear-gradient(160deg,var(--ma-dark),var(--ma-mid),#1a0404);}
+.album-card.ya{background:linear-gradient(160deg,var(--ya-dark),var(--ya-mid),#180008);}
+
+/* Bordure colorée gauche (spine) */
+.album-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:5px;
+  z-index:4;
+}
+.album-card.mg::before{background:linear-gradient(180deg,var(--mg-c),rgba(74,255,138,.4));box-shadow:0 0 12px rgba(74,255,138,.3);}
+.album-card.ff::before{background:linear-gradient(180deg,var(--ff-c),rgba(232,184,64,.4));box-shadow:0 0 12px rgba(232,184,64,.3);}
+.album-card.ma::before{background:linear-gradient(180deg,var(--ma-c),rgba(228,0,15,.4));box-shadow:0 0 12px rgba(228,0,15,.3);}
+.album-card.ya::before{background:linear-gradient(180deg,var(--ya-c),rgba(255,32,53,.4));box-shadow:0 0 12px rgba(255,32,53,.3);}
+
+/* Bordure globale */
+.album-card{
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:6px 8px 24px rgba(0,0,0,.6),0 0 0 1px rgba(0,0,0,.4);
+  transition:transform .35s cubic-bezier(.34,1.3,.64,1), box-shadow .35s ease;
+}
+.album-card:hover{
+  transform:translateY(-8px) scale(1.02);
+  z-index:10;
+}
+.album-card.mg:hover{box-shadow:6px 16px 40px rgba(0,0,0,.7),0 0 30px rgba(74,255,138,.1);}
+.album-card.ff:hover{box-shadow:6px 16px 40px rgba(0,0,0,.7),0 0 30px rgba(232,184,64,.1);}
+.album-card.ma:hover{box-shadow:6px 16px 40px rgba(0,0,0,.7),0 0 30px rgba(228,0,15,.12);}
+.album-card.ya:hover{box-shadow:6px 16px 40px rgba(0,0,0,.7),0 0 30px rgba(255,32,53,.12);}
+
+/* Grille de fond sur les cartes */
+.album-card-bg{
+  position:absolute;inset:0;pointer-events:none;opacity:.4;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M0 20 H40 M20 0 V40' stroke='%23ffffff' stroke-width='.3' opacity='.2'/%3E%3C/svg%3E");
+  background-size:40px 40px;
+}
+
+/* Gros emoji central */
+.album-card-icon{
+  position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-60%);
+  font-size:90px;line-height:1;
+  filter:drop-shadow(0 8px 24px rgba(0,0,0,.6));
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1),filter .35s;
+  pointer-events:none;z-index:2;
+}
+.album-card:hover .album-card-icon{
+  transform:translate(-50%,-65%) scale(1.1);
+}
+.album-card.mg:hover .album-card-icon img{transform:scale(1.06);}
+.album-card.mg .album-card-icon{filter:drop-shadow(0 8px 24px rgba(0,0,0,.6)) drop-shadow(0 0 16px rgba(74,255,138,.4));}
+.album-card.ff .album-card-icon{filter:drop-shadow(0 8px 24px rgba(0,0,0,.6)) drop-shadow(0 0 16px rgba(232,184,64,.5));}
+.album-card.ma .album-card-icon{filter:drop-shadow(0 8px 24px rgba(0,0,0,.6)) drop-shadow(0 0 16px rgba(228,0,15,.4));}
+.album-card.ya .album-card-icon{filter:drop-shadow(0 8px 24px rgba(0,0,0,.6)) drop-shadow(0 0 16px rgba(255,32,53,.5));}
+
+/* Info bas de carte */
+.album-card-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:36px 18px 20px;z-index:3;
+  background:linear-gradient(0deg,rgba(0,0,0,.92) 60%,transparent);
+}
+.album-card-num{
+  font-family:'Share Tech Mono',monospace;font-size:7px;
+  color:rgba(255,255,255,.2);letter-spacing:2px;
+  margin-bottom:6px;
+}
+.album-card-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(22px,3vw,30px);letter-spacing:3px;
+  line-height:1;
+  transition:text-shadow .3s;
+}
+.album-card.mg .album-card-title{color:var(--mg-c);}
+.album-card.ff .album-card-title{color:var(--ff-c);}
+.album-card.ma .album-card-title{color:var(--ma-c);}
+.album-card.ya .album-card-title{color:var(--ya-c);}
+.album-card.mg:hover .album-card-title{text-shadow:0 0 20px rgba(74,255,138,.6);}
+.album-card.ff:hover .album-card-title{text-shadow:0 0 20px rgba(232,184,64,.6);}
+.album-card.ma:hover .album-card-title{text-shadow:0 0 20px rgba(228,0,15,.6);}
+.album-card.ya:hover .album-card-title{text-shadow:0 0 20px rgba(255,32,53,.6);}
+
+.album-card-subtitle{
+  font-family:'Share Tech Mono',monospace;font-size:7px;
+  color:rgba(255,255,255,.3);letter-spacing:2px;margin-top:4px;
+}
+
+/* Barre de progression en bas */
+.album-card-prog{
+  position:absolute;bottom:0;left:5px;right:0;height:3px;z-index:5;
+  background:rgba(255,255,255,.05);overflow:hidden;
+}
+.album-card-prog-fill{
+  height:100%;width:0%;
+  transition:width 1.2s cubic-bezier(.4,0,.2,1);
+}
+.album-card.mg .album-card-prog-fill{background:var(--mg-c);}
+.album-card.ff .album-card-prog-fill{background:var(--ff-c);}
+.album-card.ma .album-card-prog-fill{background:var(--ma-c);}
+.album-card.ya .album-card-prog-fill{background:var(--ya-c);}
+
+/* Compteur carte */
+.album-card-count{
+  position:absolute;top:14px;right:14px;z-index:4;
+  font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:1px;
+  padding:3px 8px;
+  background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.3);
+  transition:all .3s;
+}
+.album-card:hover .album-card-count{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.15);}
+
+/* Badge "Ouvrir" */
+.album-card-cta{
+  position:absolute;
+  bottom:58px;right:18px;z-index:4;
+  font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;
+  padding:5px 12px;
+  border:1px solid rgba(255,255,255,.12);
+  color:rgba(255,255,255,.25);background:rgba(0,0,0,.4);
+  opacity:0;transform:translateX(6px);
+  transition:opacity .25s, transform .25s;
+}
+.album-card:hover .album-card-cta{opacity:1;transform:translateX(0);}
+
+/* Coin ombre (simulation relief) */
+.album-card-shadow{
+  position:absolute;bottom:-8px;left:8px;right:-8px;height:8px;
+  background:linear-gradient(0deg,rgba(0,0,0,.4),transparent);
+  z-index:-1;pointer-events:none;
+  transform:skewX(-1deg);
+  transition:bottom .35s, opacity .35s;
+}
+.album-card:hover .album-card-shadow{bottom:-16px;opacity:.6;}
+
+/* ══ PIED DE PAGE ══ */
+.site-footer{
+  border-top:1px solid rgba(255,255,255,.05);
+  padding:24px 60px;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+}
+.footer-brand{
+  font-family:'Bebas Neue',sans-serif;font-size:14px;
+  color:rgba(255,255,255,.15);letter-spacing:4px;
+}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;}
+.footer-link{
+  font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;
+  color:rgba(255,255,255,.12);text-decoration:none;
+  transition:color .2s;
+}
+.footer-link:hover{color:rgba(255,255,255,.4);}
+.footer-copy{
+  font-family:'Share Tech Mono',monospace;font-size:7px;
+  color:rgba(255,255,255,.08);letter-spacing:1px;
+}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:600px){
+  .site-header{padding:50px 24px 36px;}
+  .albums-section{padding:32px 20px 60px;}
+  .albums-grid{grid-template-columns:1fr 1fr;gap:14px;}
+  .site-footer{padding:20px 24px;}
+  .footer-copy{display:none;}
+}
+@media(max-width:400px){
+  .albums-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <p class="site-eyebrow">// COLLECTION · ÉDITION NUMÉRIQUE · 2025</p>
+  <h1 class="site-title" data-text="PANINI">PANINI</h1>
+  <p class="site-sub">VIDEO GAME COLLECTOR'S ALBUM</p>
+  <div class="header-rule"></div>
+
+  <div class="global-stats" id="gstats" style="margin-top:28px;">
+    <div class="gs"><span class="gs-v" id="g-own">0</span><span class="gs-l">COLLÉS</span></div>
+    <div class="gs"><span class="gs-v" id="g-tot">0</span><span class="gs-l">TOTAL</span></div>
+    <div class="gs"><span class="gs-v" id="g-pct">0%</span><span class="gs-l">COMPLÉTÉ</span></div>
+    <div class="gs"><span class="gs-v" id="g-col">4</span><span class="gs-l">FRANCHISES</span></div>
+  </div>
+</header>
+
+<!-- ══ ALBUMS ══ -->
+<section class="albums-section">
+  <div class="section-label">// ALBUMS DISPONIBLES</div>
+
+  <div class="albums-grid">
+
+    <!-- Metal Gear -->
+    <a href="metal-gear-album.html" class="album-card mg" id="card-mg">
+      <div class="album-card-bg"></div>
+      <div class="album-card-shadow"></div>
+      <div class="album-card-icon" style="font-size:0;width:85%;height:72%;top:10%;left:50%;transform:translateX(-50%);position:absolute;overflow:hidden;border-radius:2px;"><img src="https://s1.qwant.com/thumbr/474x266/0/1/51e74b57d8cfc5a5050ea5915fa354313c6b5d4346d9f1a3eec0373fdf9f4f/OIP.OcdKCwf639yBXePVRxk3EgHaEK.jpg?u=https%3A%2F%2Ftse.mm.bing.net%2Fth%2Fid%2FOIP.OcdKCwf639yBXePVRxk3EgHaEK%3Fpid%3DApi&q=0&b=1&p=0&a=0" style="width:100%;height:100%;object-fit:cover;transition:transform .35s cubic-bezier(.34,1.56,.64,1);" alt="Metal Gear"></div>
+      <div class="album-card-count" id="cnt-mg">0 / 13</div>
+      <div class="album-card-cta">→ OUVRIR</div>
+      <div class="album-card-info">
+        <div class="album-card-num">// ALBUM 01</div>
+        <div class="album-card-title">METAL GEAR</div>
+        <div class="album-card-subtitle">TACTICAL PANINI · 1987–2018</div>
+      </div>
+      <div class="album-card-prog"><div class="album-card-prog-fill" id="prog-mg"></div></div>
+    </a>
+
+    <!-- Final Fantasy -->
+    <a href="final-fantasy-album.html" class="album-card ff" id="card-ff">
+      <div class="album-card-bg"></div>
+      <div class="album-card-shadow"></div>
+      <div class="album-card-icon">🔮</div>
+      <div class="album-card-count" id="cnt-ff">0 / 22</div>
+      <div class="album-card-cta">→ OUVRIR</div>
+      <div class="album-card-info">
+        <div class="album-card-num">// ALBUM 02</div>
+        <div class="album-card-title">FINAL FANTASY</div>
+        <div class="album-card-subtitle">CRYSTAL PANINI · 1987–2024</div>
+      </div>
+      <div class="album-card-prog"><div class="album-card-prog-fill" id="prog-ff"></div></div>
+    </a>
+
+    <!-- Mario -->
+    <a href="mario-album.html" class="album-card ma" id="card-ma">
+      <div class="album-card-bg"></div>
+      <div class="album-card-shadow"></div>
+      <div class="album-card-icon">🍄</div>
+      <div class="album-card-count" id="cnt-ma">0 / 23</div>
+      <div class="album-card-cta">→ OUVRIR</div>
+      <div class="album-card-info">
+        <div class="album-card-num">// ALBUM 03</div>
+        <div class="album-card-title">SUPER MARIO</div>
+        <div class="album-card-subtitle">MARIO PANINI · 1985–2023</div>
+      </div>
+      <div class="album-card-prog"><div class="album-card-prog-fill" id="prog-ma"></div></div>
+    </a>
+
+    <!-- Yakuza -->
+    <a href="yakuza-album.html" class="album-card ya" id="card-ya">
+      <div class="album-card-bg"></div>
+      <div class="album-card-shadow"></div>
+      <div class="album-card-icon">🐉</div>
+      <div class="album-card-count" id="cnt-ya">0 / 14</div>
+      <div class="album-card-cta">→ OUVRIR</div>
+      <div class="album-card-info">
+        <div class="album-card-num">// ALBUM 04</div>
+        <div class="album-card-title">YAKUZA</div>
+        <div class="album-card-subtitle">LIKE A DRAGON · 2005–2024</div>
+      </div>
+      <div class="album-card-prog"><div class="album-card-prog-fill" id="prog-ya"></div></div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  <span class="footer-brand">🕹 PANINI</span>
+  <div class="footer-links">
+    <a href="metal-gear-album.html" class="footer-link">⚙ Metal Gear</a>
+    <a href="final-fantasy-album.html" class="footer-link">⚔ Final Fantasy</a>
+    <a href="mario-album.html" class="footer-link">★ Mario</a>
+    <a href="yakuza-album.html" class="footer-link">龍 Yakuza</a>
+  </div>
+  <span class="footer-copy">// VIDEO GAME COLLECTOR'S ALBUM</span>
+</footer>
+
+<script>
+// Données statiques des albums (totaux)
+const ALBUMS = {
+  mg: { total: 13 },
+  ff: { total: 22 },
+  ma: { total: 23 },
+  ya: { total: 14 },
+};
+
+// Charge les données de progression depuis localStorage si disponibles
+// Sinon affiche juste les totaux avec 0 collés
+function loadProgress() {
+  let totalOwn = 0;
+  let totalAll = 0;
+
+  Object.entries(ALBUMS).forEach(([key, data]) => {
+    // Tente de lire l'état sauvegardé (compatible avec les albums)
+    let owned = 0;
+    const saved = localStorage.getItem('panini_' + key);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        owned = Array.isArray(parsed) ? parsed.filter(g => g.own).length : 0;
+      } catch(e) {}
+    }
+
+    const pct = data.total > 0 ? Math.round(owned / data.total * 100) : 0;
+
+    document.getElementById('cnt-' + key).textContent = owned + ' / ' + data.total;
+
+    // Déclenche l'animation barre avec délai
+    setTimeout(() => {
+      document.getElementById('prog-' + key).style.width = pct + '%';
+    }, 1000 + ['mg','ff','ma','ya'].indexOf(key) * 150);
+
+    totalOwn += owned;
+    totalAll += data.total;
+  });
+
+  const gPct = totalAll > 0 ? Math.round(totalOwn / totalAll * 100) : 0;
+
+  // Anime les chiffres
+  animCount('g-own', totalOwn);
+  animCount('g-tot', totalAll);
+  setTimeout(() => {
+    document.getElementById('g-pct').textContent = gPct + '%';
+  }, 600);
+}
+
+function animCount(id, target) {
+  const el = document.getElementById(id);
+  if (target === 0) { el.textContent = '0'; return; }
+  let start = 0;
+  const dur = 800;
+  const step = 16;
+  const inc = target / (dur / step);
+  const t = setInterval(() => {
+    start = Math.min(start + inc, target);
+    el.textContent = Math.round(start);
+    if (start >= target) clearInterval(t);
+  }, step);
+}
+
+// Charge au démarrage
+window.addEventListener('load', () => {
+  setTimeout(loadProgress, 400);
+});
+</script>
+</body>
+</html>
